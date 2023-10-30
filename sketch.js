@@ -1,3 +1,9 @@
+"use strict!"
+
+function preload(){
+  Jack Jack
+}
+
 function setup() {
   //code here
 }

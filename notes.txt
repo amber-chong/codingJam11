@@ -1,7 +1,7 @@
-* clone
-* add
-commit
-push
-pull
-* status
-log
+* clone - take the github link and clones it into a folder (?)
+* add - adds file to repo
+* commit - saves it + can add messages to the repo
+* push - sends new version to repo (use after commit)
+* pull - takes new version (if someone else has made changes)
+* status - shows commits/general status
+* log - shows manual updates

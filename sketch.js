@@ -12,7 +12,4 @@ function setup() {
 function draw() {
   //code here
   background(120);
-  //testing
-  //test 2
-  //test 3
 }

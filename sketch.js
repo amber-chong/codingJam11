@@ -1,5 +1,8 @@
+//Global Variables
+
+
 function preload(){
-  //Jack Jack
+  
 }
 
 function setup() {

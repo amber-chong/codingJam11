@@ -6,9 +6,10 @@ function preload(){
 
 function setup() {
   //code here
-  new Canvas();
+  createCanvas(800, 800);
 }
 
 function draw() {
   //code here
+  background(120);
 }

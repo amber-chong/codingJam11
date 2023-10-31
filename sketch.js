@@ -1,5 +1,3 @@
-"use strict!"
-
 function preload(){
   //Jack Jack
 }

@@ -35,10 +35,29 @@ let worm;
 let base;
 
 //Minion 1
+let lineX;
+let lineY;
+let minion1;
+let distance1;
+let radius = 30;
+let minion1Click = false;
+let moving1 = false;
 
 //Minion 2
+let lineX2;
+let lineY2;
+let minion2;
+let distance2;
+let minion2Click = false;
+let moving2 = false;
 
 //Minion 3
+let lineX3;
+let lineY3;
+let minion3;
+let distance3;
+let minion3Click = false;
+let moving3 = false;
 
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
@@ -73,6 +92,11 @@ function setup() {
 
   base = new Sprite(500, 550);                          //Correlates to First sprite and keyboard movement
   base.collider = 'kinematic'                           //Removes rotation of spite after collision
+
+  minion1 = createSprite(440, 550, radius);
+  minion2 = createSprite(560, 550, radius);
+  minion3 = createSprite(500, 490, radius);
+
 }
 
 function draw() {
@@ -85,9 +109,19 @@ function draw() {
   p1Movement();                                           //Runs Custom Keyboard Movement Function
   buyUpgrades();                                          //Runs Custom Function
   mouseClicked();
+
+  minionPress1();
+  createLine1();
+  minionMovement1();
+
+  minionPress2();
+  createLine2();
+  minionMovement2();
+
+  minionPress3();
+  createLine3();
+  minionMovement3();
 }
-
-
 
 function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
   timer--;                                              //Used to animate coin
@@ -210,6 +244,86 @@ function p1Movement() {
   } else base.vel.x = 0
 }
 
+function minionMovement1(){
+  if(mouse.presses() && moving1 == true){
+    minion1.moveTo(mouseX, mouseY);
+    minion1Click = false;
+    moving1 = false;
+    }
+}
+
+function minionPress1(){
+  distance1 = dist(mouseX, mouseY, minion1.x, minion1.y);
+  if(distance1 < radius && mouse.presses()){
+      minion1Click = true;
+      moving1 = false;
+  }
+}
+
+function createLine1(){
+  if(minion1Click == true && moving1 == false){
+    lineX = mouseX;
+    lineY = mouseY;
+    line(minion1.x, minion1.y, lineX, lineY);
+    if(distance1 > radius && mouse.presses()){
+        moving1 = true;
+    }
+    }
+}
+
+function minionMovement2(){
+  if(mouse.presses() && moving2 == true){
+    minion2.moveTo(mouseX, mouseY);
+    minion2Click = false;
+    moving2 = false;
+    }
+}
+
+function minionPress2(){
+  distance2 = dist(mouseX, mouseY, minion2.x, minion2.y);
+  if(distance2 < radius && mouse.presses()){
+      minion2Click = true;
+      moving2 = false;
+  }
+}
+
+function createLine2(){
+  if(minion2Click == true && moving2 == false){
+    lineX2 = mouseX;
+    lineY2 = mouseY;
+    line(minion2.x, minion2.y, lineX2, lineY2);
+    if(distance2 > radius && mouse.presses()){
+        moving2 = true;
+    }
+    }
+}
+
+function minionMovement3(){
+  if(mouse.presses() && moving3 == true){
+    minion3.moveTo(mouseX, mouseY);
+    minion3Click = false;
+    moving3 = false;
+    }
+}
+
+function minionPress3(){
+  distance3 = dist(mouseX, mouseY, minion3.x, minion3.y);
+  if(distance3 < radius && mouse.presses()){
+      minion3Click = true;
+      moving3 = false;
+  }
+}
+
+function createLine3(){
+  if(minion3Click == true && moving3 == false){
+    lineX3 = mouseX;
+    lineY3 = mouseY;
+    line(minion3.x, minion3.y, lineX3, lineY3);
+    if(distance3 > radius && mouse.presses()){
+        moving3 = true;
+    }
+    }
+}
 
 //Credit
 //Art Sourced From OpenGameArt.Org

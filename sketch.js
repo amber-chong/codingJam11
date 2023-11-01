@@ -8,20 +8,26 @@ let GoldCoin6;                                                      //Images For
 let GoldCoin7;                                                      //Images For Resource Bar
 let GoldCoin8;                                                      //Images For Resource Bar
 let GoldCoin9;                                                      //Images For Resource Bar
-let GoldCoinIndex = 0;                                              //Iterate Through Array
+let GoldCoinIndex = 0;                                              //Iterate Through Array for animation
 let timer = 15;                                                     //Timer To Stagger Animation
 GoldCoinArray = new Array();                                        //Holds Gold Coin Images
 
 let wormImg;
 let goldOreImg;
 
+goldOreArray = new Array();
+wormArray = new Array();
+
 let goldCount = 0;                                                  //Holds Resource Value and Displays text in status bar
 let wormCount = 0;
 
-let spawnTimer = 900;                                               //Used for Random Spawning of Resources
-let spawnTimerExec;                                                 //Used for Random Spawning of Resources
+let goldSpawnTimer = 1800;                                          //Used for Random Spawning of Resources
+let goldSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let goldOre;
 
+let wormSpawnTimer = 600;                                           //Used for Random Spawning of Resources
+let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
+let worm;
 
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
@@ -39,80 +45,97 @@ function preload() {
 
 function setup() {
   createCanvas(1000, 600);
-  spawnTimerExec = floor(random(0, 900));                  //Initialises First Rand Num For Resource Spawning                       
+  goldSpawnTimerExec = floor(random(0, 900));           //Initialises First Rand Num For Resource Spawning -- Use of floor() to round to nearest whole int                      
+  wormSpawnTimerExec = floor(random(0, 600));           //Initialises First Rand Num For Resource Spawning -- Use of floor() to round to nearest whole int                      
 
-  GoldCoinArray.push(GoldCoin1,                     //Push Preloaded Images Into Array
-    GoldCoin2,                                      //Push Preloaded Images Into Array
-    GoldCoin3,                                      //Push Preloaded Images Into Array
-    GoldCoin4,                                      //Push Preloaded Images Into Array
-    GoldCoin5,                                      //Push Preloaded Images Into Array
-    GoldCoin6,                                      //Push Preloaded Images Into Array
-    GoldCoin7,                                      //Push Preloaded Images Into Array
-    GoldCoin8,                                      //Push Preloaded Images Into Array
-    GoldCoin9);                                     //Push Preloaded Images Into Array
-  
-    new Sprite(100, 100);
+
+  GoldCoinArray.push(GoldCoin1,                         //Push Preloaded Images Into Array
+    GoldCoin2,                                          //Push Preloaded Images Into Array
+    GoldCoin3,                                          //Push Preloaded Images Into Array
+    GoldCoin4,                                          //Push Preloaded Images Into Array
+    GoldCoin5,                                          //Push Preloaded Images Into Array
+    GoldCoin6,                                          //Push Preloaded Images Into Array
+    GoldCoin7,                                          //Push Preloaded Images Into Array
+    GoldCoin8,                                          //Push Preloaded Images Into Array
+    GoldCoin9);                                         //Push Preloaded Images Into Array
+    
+  new Sprite(100, 100);
 }
 
 function draw() {
-  spawnTimer--;
+  goldSpawnTimer--;                                     //Decrements Timer
+  wormSpawnTimer--;                                     //Decrements Timer
 
   background('black');
-  resourceStatusBar();                            //Runs Custom Function
-  resourceCollectionMechanics();                  //Runs Custom Function
+  resourceStatusBar();                                  //Runs Custom Function
+  resourceCollectionMechanics();                        //Runs Custom Function
 
-  if(spawnTimerExec == spawnTimer){
-    resourceGeneration();
-    spawnTimer = 900;
-    spawnTimerExec = floor(random(0, 900)); 
-}
-}
-
-
-
-function resourceStatusBar() {                    //Draws The Status Bar in the top left corner
-  timer--;
-
-  stroke('white')                                 //Outline|Border of box
-  noFill()                                        //Outline|Border of box
-  rect(10, 10, 200, 40, 5);                       //Outline|Border of box
-
-  if(timer == 0){
-  GoldCoinIndex ++;                               //Increments index
-  if (GoldCoinIndex >= GoldCoinArray.length) {    //Resets Index allowing for animation
-    GoldCoinIndex = 0;
+  if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 15 secconds
+    goldOreArray.push(goldGeneration());                //Runs Custom Function and stores in array to check for collisions
+    goldSpawnTimer = 1800;
+    goldSpawnTimerExec = floor(random(0, 1800));        //Use of floor() to round to nearest whole int
   }
-  timer = 15;                                     //Resets Timer Used to stagger coin animation
-  } 
-  
-  image(GoldCoinArray[GoldCoinIndex], 10, 15);    //Draws the coin stored at a specific index of the array
-  image(wormImg, 120, 15)                         //Draws Worm in status bar
+  if (wormSpawnTimerExec == wormSpawnTimer) {           //Allows For random spawn time within 15 secconds
+    wormArray.push(wormGeneration());                   //Runs Custom Function and stores in array to check for collisions
+    wormSpawnTimer = 600;
+    wormSpawnTimerExec = floor(random(0, 600));         //Use of floor() to round to nearest whole int
+  }
+}
 
-  textAlign(LEFT, CENTER);                        //Displays GoldCount Value in Status Bar
-  textSize(18);                                   //Displays GoldCount Value in Status Bar 
-  noStroke();                                     //Displays GoldCount Value in Status Bar
-  fill('gold');                                   //Displays GoldCount Value in Status Bar
-  text(goldCount, 40, 33);                        //Displays GoldCount Value in Status Bar
-  fill('#d36d5d')                                 //Displays WormCount
-  text(wormCount, 150, 33)                        //Displays WormCount
 
+
+function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
+  timer--;                                              //Used to animate coin
+
+  stroke('white')                                       //Outline|Border of box
+  noFill()                                              //Outline|Border of box
+  rect(10, 10, 200, 40, 5);                             //Outline|Border of box
+
+  if (timer == 0) {
+    GoldCoinIndex++;                                    //Increments index
+    if (GoldCoinIndex >= GoldCoinArray.length) {        //Resets Index allowing for animation
+      GoldCoinIndex = 0;
+    }
+    timer = 15;                                         //Resets Timer Used to stagger coin animation
+  }
+
+  image(GoldCoinArray[GoldCoinIndex], 10, 15);          //Draws the coin stored at a specific index of the array
+  image(wormImg, 120, 15)                               //Draws Worm in status bar
+
+  textAlign(LEFT, CENTER);                              //Displays GoldCount Value in Status Bar
+  textSize(18);                                         //Displays GoldCount Value in Status Bar 
+  noStroke();                                           //Displays GoldCount Value in Status Bar
+  fill('gold');                                         //Displays GoldCount Value in Status Bar
+  text(goldCount, 40, 33);                              //Displays GoldCount Value in Status Bar
+  fill('#d36d5d')                                       //Displays WormCount
+  text(wormCount, 150, 33)                              //Displays WormCount
+}
+
+function resourceCollectionMechanics() {
 
 }
 
-function resourceCollectionMechanics() {           
-
-}
-
-function resourceGeneration() {
-let goldOre = new Sprite()
+function goldGeneration() {
+  let goldOre = new Sprite()                            //Creates Gold Ore Sprite
   goldOre.img = goldOreImg
-  goldOre.scale = 0.1 
-  goldOre.x = random(60, width-60)
-  goldOre.y = random(60, height-60)
+  goldOre.scale = 0.1
+  goldOre.x = random(60, width - 60)
+  goldOre.y = random(60, height - 60)
   goldOre.w = 40
   goldOre.h = 20
+  return goldOre
 }
 
+function wormGeneration() {
+  let worm = new Sprite()                              //Creates Worm Sprite
+  worm.img = wormImg
+  worm.scale = 2
+  worm.x = random(60, width - 60)
+  worm.y = random(60, height - 60)
+  worm.w = 40
+  worm.h = 20
+  return worm
+}
 
 
 

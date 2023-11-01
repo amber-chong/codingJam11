@@ -94,8 +94,11 @@ function setup() {
   base.collider = 'kinematic'                           //Removes rotation of spite after collision
 
   minion1 = createSprite(440, 550, radius);             //Creates mionion
+  minion1.collider = 'kinematic' 
   minion2 = createSprite(560, 550, radius);             //Creates mionion
+  minion2.collider = 'kinematic' 
   minion3 = createSprite(500, 490, radius);             //Creates mionion
+  minion3.collider = 'kinematic' 
 
 }
 
@@ -164,7 +167,7 @@ function resourceCollectionMechanics() {
   }
 
   for (let i = 0; i < goldOreArray.length; i++) {               //Loops through GoldOreArray
-    if (goldOreArray[i].collides(base)) {                     //Checks for collision between each instance of array and play
+    if (goldOreArray[i].collides(minion1) || goldOreArray[i].collides(minion2) || goldOreArray[i].collides(minion3)) {                     //Checks for collision between each instance of array and play
       fill('green');
       rect(goldOreArray[i], goldOreArray[i] - 30, 40, 15);
       goldOreArray[i].remove();                                 //Removes Sprite after collision
@@ -173,7 +176,7 @@ function resourceCollectionMechanics() {
   }
 
   for (let i = 0; i < wormArray.length; i++) {                  //Loops through WormArray
-    if (wormArray[i].collides(base)) {                        //Checks for collision between each instance of array and player
+    if (wormArray[i].collides(minion1) || wormArray[i].collides(minion2) || wormArray[i].collides(minion3)){                        //Checks for collision between each instance of array and player
       fill('green');
       rect(wormArray[i], wormArray[i] - 30, 40, 15);
       wormArray[i].remove();                                    //Removes Sprite after collision

@@ -25,6 +25,9 @@ let goldSpawnTimer = 1800;                                          //Used for R
 let goldSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let goldOre;
 
+let buyStationOpen = false;                                         //Buy Station Open/Closed logic
+let BSXImg;                                                         //image for closing buy station
+
 let wormSpawnTimer = 600;                                           //Used for Random Spawning of Resources
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
@@ -43,6 +46,7 @@ function preload() {
   GoldCoin9 = loadImage('Assets/Images/GoldCoin/goldCoin9.png');    //Preloads Images 
   wormImg = loadImage('Assets/Images/worm (2).png');                //Preloads Images 
   goldOreImg = loadImage('Assets/Images/gold_ore.png');             //Preloads Images
+  BSXImg = loadImage('Assets/Images/Wii_Minus.png')
 }
 
 function setup() {
@@ -63,7 +67,6 @@ function setup() {
 
   player = new Sprite(200, 200);                          //Correlates to First sprite and keyboard movement
   player.collider = 'kinematic'                           //Removes rotation of spite after collision
-
 }
 
 function draw() {
@@ -74,66 +77,70 @@ function draw() {
   resourceStatusBar();                                    //Runs Custom Function
   resourceCollectionMechanics();                          //Runs Custom Function
   p1Movement();                                           //Runs Custom Keyboard Movement Function
+  buyUpgrades();                                          //Runs Custom Function
+  mouseClicked();
 }
 
 
-  function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
-    timer--;                                              //Used to animate coin
 
-    stroke('white')                                       //Outline|Border of box
-    noFill()                                              //Outline|Border of box
-    rect(10, 10, 200, 40, 5);                             //Outline|Border of box
+function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
+  timer--;                                              //Used to animate coin
 
-    if (timer == 0) {
-      GoldCoinIndex++;                                    //Increments index
-      if (GoldCoinIndex >= GoldCoinArray.length) {        //Resets Index allowing for animation
-        GoldCoinIndex = 0;
-      }
-      timer = 15;                                         //Resets Timer Used to stagger coin animation
+  stroke('white');                                       //Outline|Border of box
+  noFill();                                              //Outline|Border of box
+  rectMode(CORNER);
+  rect(10, 10, 200, 40, 5);                             //Outline|Border of box
+
+  if (timer == 0) {
+    GoldCoinIndex++;                                    //Increments index
+    if (GoldCoinIndex >= GoldCoinArray.length) {        //Resets Index allowing for animation
+      GoldCoinIndex = 0;
     }
-
-    image(GoldCoinArray[GoldCoinIndex], 80, 15);          //Draws the coin stored at a specific index of the array
-    image(wormImg, 15, 15)                                //Draws Worm in status bar
-
-    textAlign(LEFT, CENTER);                              //Displays GoldCount Value in Status Bar
-    textSize(18);                                         //Displays GoldCount Value in Status Bar 
-    noStroke();                                           //Displays GoldCount Value in Status Bar
-    fill('gold');                                         //Displays GoldCount Value in Status Bar
-    text(goldCount, 110, 33);                             //Displays GoldCount Value in Status Bar
-    fill('#d36d5d')                                       //Displays WormCount
-    text(wormCount, 45, 33)                               //Displays WormCount
+    timer = 15;                                         //Resets Timer Used to stagger coin animation
   }
 
-  function resourceCollectionMechanics() {
-    if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 30 secconds
-      goldOreArray.push(goldGeneration());                //Runs Custom Function and stores in array to check for collisions
-      goldSpawnTimer = 1800;
-      goldSpawnTimerExec = floor(random(0, 1800));        //Use of floor() to round to nearest whole int
-    }
-    if (wormSpawnTimerExec == wormSpawnTimer) {           //Allows For random spawn time within 10 secconds
-      wormArray.push(wormGeneration());                   //Runs Custom Function and stores in array to check for collisions
-      wormSpawnTimer = 600;
-      wormSpawnTimerExec = floor(random(0, 600));         //Use of floor() to round to nearest whole int
-    }
+  image(GoldCoinArray[GoldCoinIndex], 80, 15);          //Draws the coin stored at a specific index of the array
+  image(wormImg, 15, 15);                                //Draws Worm in status bar
 
-    for (let i = 0; i < goldOreArray.length; i++) {               //Loops through GoldOreArray
-      if (goldOreArray[i].collides(player)) {                     //Checks for collision between each instance of array and play
-        fill('green');
-        rect(goldOreArray[i], goldOreArray[i] - 30, 40, 15);
-        goldOreArray[i].remove();                                 //Removes Sprite after collision
-        goldCount++;
-      }
-    }
+  textAlign(LEFT, CENTER);                              //Displays GoldCount Value in Status Bar
+  textSize(18);                                         //Displays GoldCount Value in Status Bar 
+  noStroke();                                           //Displays GoldCount Value in Status Bar
+  fill('gold');                                         //Displays GoldCount Value in Status Bar
+  text(goldCount, 110, 33);                             //Displays GoldCount Value in Status Bar
+  fill('#d36d5d');                                       //Displays WormCount
+  text(wormCount, 45, 33);                               //Displays WormCount
+}
 
-    for (let i = 0; i < wormArray.length; i++) {                  //Loops through WormArray
-      if (wormArray[i].collides(player)) {                        //Checks for collision between each instance of array and player
-        fill('green');
-        rect(wormArray[i], wormArray[i] - 30, 40, 15);
-        wormArray[i].remove();                                    //Removes Sprite after collision
-        wormCount++;                                              //Adds to the currency in top left
-      }
+function resourceCollectionMechanics() {
+  if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 30 secconds
+    goldOreArray.push(goldGeneration());                //Runs Custom Function and stores in array to check for collisions
+    goldSpawnTimer = 1800;
+    goldSpawnTimerExec = floor(random(0, 1800));        //Use of floor() to round to nearest whole int
+  }
+  if (wormSpawnTimerExec == wormSpawnTimer) {           //Allows For random spawn time within 10 secconds
+    wormArray.push(wormGeneration());                   //Runs Custom Function and stores in array to check for collisions
+    wormSpawnTimer = 600;
+    wormSpawnTimerExec = floor(random(0, 600));         //Use of floor() to round to nearest whole int
+  }
+
+  for (let i = 0; i < goldOreArray.length; i++) {               //Loops through GoldOreArray
+    if (goldOreArray[i].collides(player)) {                     //Checks for collision between each instance of array and play
+      fill('green');
+      rect(goldOreArray[i], goldOreArray[i] - 30, 40, 15);
+      goldOreArray[i].remove();                                 //Removes Sprite after collision
+      goldCount++;
     }
   }
+
+  for (let i = 0; i < wormArray.length; i++) {                  //Loops through WormArray
+    if (wormArray[i].collides(player)) {                        //Checks for collision between each instance of array and player
+      fill('green');
+      rect(wormArray[i], wormArray[i] - 30, 40, 15);
+      wormArray[i].remove();                                    //Removes Sprite after collision
+      wormCount++;                                              //Adds to the currency in top left
+    }
+  }
+}
 
 
 function goldGeneration() {
@@ -155,9 +162,32 @@ function wormGeneration() {
   worm.y = random(60, height - 60)
   worm.w = 45
   worm.h = 15
-
-  worm.debug = true;
   return worm
+}
+
+function buyUpgrades() {
+  if (mouseX >= width - 15 && mouseX <= width && mouseY >= height / 2 - 40 && mouseY <= height / 2 + 40) {    //Checks if Mouse is over buy station tab
+    buyStationOpen = true;                                                                                    // sets value to true
+  }
+
+  if (buyStationOpen == false) {                                                                              //Buy station is closed if value is false
+    rectMode(CENTER);
+    stroke('white');
+    fill(211, 211, 211, 80);
+    rect(width, height / 2, 30, 80, 5);
+  } else {                                                                                                    // Buy station i sopen if value is true
+    rectMode(CENTER);
+    stroke('white');
+    fill(211, 211, 211, 80)
+    rect(width, height / 2, 300, 450, 5);
+    image(BSXImg, width-150, height/2-220, 30, 30)
+  }
+}
+
+function mouseClicked(){       
+  if(mouseX >= 854 && mouseX <= 869 && mouseY >= 84 && mouseY <= 100) {                   //Closes Buy Station
+    buyStationOpen = false;
+}
 }
 
 function p1Movement() {

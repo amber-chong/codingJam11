@@ -62,6 +62,8 @@ function setup() {
     GoldCoin9);                                         //Push Preloaded Images Into Array
 
   player = new Sprite(100, 100);                        //Correlates to First sprite and keyboard movement
+  player.collider = 'kinematic'                         //Removes rotation of spite after collision
+
 }
 
 function draw() {
@@ -73,19 +75,35 @@ function draw() {
   resourceCollectionMechanics();                        //Runs Custom Function
   p1Movement();                                         //Runs Custom Keyboard Movement Function
 
-  if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 15 secconds
+  if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 30 secconds
     goldOreArray.push(goldGeneration());                //Runs Custom Function and stores in array to check for collisions
     goldSpawnTimer = 1800;
     goldSpawnTimerExec = floor(random(0, 1800));        //Use of floor() to round to nearest whole int
   }
-  if (wormSpawnTimerExec == wormSpawnTimer) {           //Allows For random spawn time within 15 secconds
+  if (wormSpawnTimerExec == wormSpawnTimer) {           //Allows For random spawn time within 10 secconds
     wormArray.push(wormGeneration());                   //Runs Custom Function and stores in array to check for collisions
     wormSpawnTimer = 600;
     wormSpawnTimerExec = floor(random(0, 600));         //Use of floor() to round to nearest whole int
   }
+
+for(let i=0; i<goldOreArray.length; i++) {                  //Loops through GoldOreArray
+    if(goldOreArray[i].collides(player)){                   //Checks for collision between each instance of array and play
+      fill('green');
+      rect(goldOreArray[i], goldOreArray[i]-30, 40, 15);
+      goldOreArray[i].remove();                             //Removes Sprite after collision
+      goldCount++;                                          
+    }
 }
 
-
+for(let i=0; i<wormArray.length; i++) {                     //Loops through WormArray
+  if(wormArray[i].collides(player)){                        //Checks for collision between each instance of array and player
+    fill('green');
+    rect(wormArray[i], wormArray[i]-30, 40, 15);
+    wormArray[i].remove();                                  //Removes Sprite after collision
+    wormCount++;                                            //Adds to the currency in top left
+  }
+}
+}
 
 function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
   timer--;                                              //Used to animate coin
@@ -137,6 +155,7 @@ function wormGeneration() {
   worm.y = random(60, height - 60)
   worm.w = 40
   worm.h = 20
+  worm.debug = true;
   return worm
 }
 

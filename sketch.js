@@ -32,7 +32,13 @@ let wormSpawnTimer = 600;                                           //Used for R
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
-let player;
+let base;
+
+//Minion 1
+
+//Minion 2
+
+//Minion 3
 
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
@@ -65,8 +71,8 @@ function setup() {
     GoldCoin8,                                            //Push Preloaded Images Into Array
     GoldCoin9);                                           //Push Preloaded Images Into Array
 
-  player = new Sprite(200, 200);                          //Correlates to First sprite and keyboard movement
-  player.collider = 'kinematic'                           //Removes rotation of spite after collision
+  base = new Sprite(500, 550);                          //Correlates to First sprite and keyboard movement
+  base.collider = 'kinematic'                           //Removes rotation of spite after collision
 }
 
 function draw() {
@@ -124,7 +130,7 @@ function resourceCollectionMechanics() {
   }
 
   for (let i = 0; i < goldOreArray.length; i++) {               //Loops through GoldOreArray
-    if (goldOreArray[i].collides(player)) {                     //Checks for collision between each instance of array and play
+    if (goldOreArray[i].collides(base)) {                     //Checks for collision between each instance of array and play
       fill('green');
       rect(goldOreArray[i], goldOreArray[i] - 30, 40, 15);
       goldOreArray[i].remove();                                 //Removes Sprite after collision
@@ -133,7 +139,7 @@ function resourceCollectionMechanics() {
   }
 
   for (let i = 0; i < wormArray.length; i++) {                  //Loops through WormArray
-    if (wormArray[i].collides(player)) {                        //Checks for collision between each instance of array and player
+    if (wormArray[i].collides(base)) {                        //Checks for collision between each instance of array and player
       fill('green');
       rect(wormArray[i], wormArray[i] - 30, 40, 15);
       wormArray[i].remove();                                    //Removes Sprite after collision
@@ -191,17 +197,17 @@ function mouseClicked(){
 }
 
 function p1Movement() {
-  if (kb.pressing('arrowUp') && player.y > 60 + player.h / 2) {                           //Vertical Movement
-    player.vel.y = -10;
-  } else if (kb.pressing('arrowDown') && player.y < height - 60 - player.h / 2) {
-    player.vel.y = +10
-  } else player.vel.y = 0
+  if (kb.pressing('arrowUp') && base.y > 60 + base.h / 2) {                           //Vertical Movement
+    base.vel.y = -10;
+  } else if (kb.pressing('arrowDown') && base.y < height - 60 - base.h / 2) {
+    base.vel.y = +10
+  } else base.vel.y = 0
 
-  if (kb.pressing('arrowRight') && player.x < width - 60 - player.w / 2) {                //Horizontal Movement
-    player.vel.x = +10;
-  } else if (kb.pressing('arrowLeft') && player.x > 60 + player.w / 2) {
-    player.vel.x = -10
-  } else player.vel.x = 0
+  if (kb.pressing('arrowRight') && base.x < width - 60 - base.w / 2) {                //Horizontal Movement
+    base.vel.x = +10;
+  } else if (kb.pressing('arrowLeft') && base.x > 60 + base.w / 2) {
+    base.vel.x = -10
+  } else base.vel.x = 0
 }
 
 

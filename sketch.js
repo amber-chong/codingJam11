@@ -1,5 +1,5 @@
 //Global Variables
-let goldCoin1;                                                      //Images For Resource Bar
+let GoldCoin1;                                                      //Images For Resource Bar
 let GoldCoin2;                                                      //Images For Resource Bar
 let GoldCoin3;                                                      //Images For Resource Bar
 let GoldCoin4;                                                      //Images For Resource Bar
@@ -12,7 +12,10 @@ let GoldCoinIndex = 0;                                              //Iterate Th
 let timer = 15;                                                     //Timer To Stagger Animation
 GoldCoinArray = new Array();                                        //Holds Gold Coin Images
 
-let GoldCount = 0;                                                  //Holds Resource Value and Displays text in status bar
+let wormImg;
+
+let goldCount = 0;                                                  //Holds Resource Value and Displays text in status bar
+let wormCount = 0;
 
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
@@ -24,6 +27,7 @@ function preload() {
   GoldCoin7 = loadImage('Assets/Images/GoldCoin/goldCoin7.png');    //Preloads Images 
   GoldCoin8 = loadImage('Assets/Images/GoldCoin/goldCoin8.png');    //Preloads Images 
   GoldCoin9 = loadImage('Assets/Images/GoldCoin/goldCoin9.png');    //Preloads Images 
+  wormImg = loadImage('Assets/Images/worm (2).png');                //Preloads Images 
 }
 
 function setup() {
@@ -56,7 +60,7 @@ function resourceStatusBar() {                    //Draws The Status Bar in the 
 
   stroke('white')                                 //Outline|Border of box
   noFill()                                        //Outline|Border of box
-  rect(10, 10, 300, 40, 5);                       //Outline|Border of box
+  rect(10, 10, 200, 40, 5);                       //Outline|Border of box
 
   if(timer == 0){
   GoldCoinIndex ++;                               //Increments index
@@ -67,12 +71,15 @@ function resourceStatusBar() {                    //Draws The Status Bar in the 
   } 
   
   image(GoldCoinArray[GoldCoinIndex], 10, 15);    //Draws the coin stored at a specific index of the array
-  
+  image(wormImg, 120, 15)
+
   textAlign(LEFT, CENTER);                        //Displays GoldCount Value in Status Bar
   textSize(18);                                   //Displays GoldCount Value in Status Bar 
   noStroke();                                     //Displays GoldCount Value in Status Bar
   fill('gold');                                   //Displays GoldCount Value in Status Bar
-  text(GoldCount, 40, 33);                        //Displays GoldCount Value in Status Bar
+  text(goldCount, 40, 33);                        //Displays GoldCount Value in Status Bar
+  fill('#d36d5d')
+  text(wormCount, 150, 33)
 
 
 }
@@ -84,5 +91,8 @@ function resourceCollectionMechanics() {
 
 
 
-
+//Credit
+//Art Sourced From OpenGameArt.Org
+//GoldCoin - morgan3d
+//Worm - Russpuppy
 

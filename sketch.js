@@ -34,30 +34,30 @@ let worm;
 
 let base;
 
-//Minion 1
-let lineX;
-let lineY;
-let minion1;
-let distance1;
-let radius = 30;
-let minion1Click = false;
-let moving1 = false;
+//Minion 1                                                          
+let lineX;                                                          //Used to create line from minions
+let lineY;                                                          //Used to create line from minions
+let minion1;                                                        //Used to create minion
+let distance1;                                                      //Used to find distance inside minion
+let radius = 30;                                                    //Used to create line from minions
+let minion1Click = false;                                           //So minion can only move when selected
+let moving1 = false;                                                //So minion can only move when selected
 
 //Minion 2
-let lineX2;
-let lineY2;
-let minion2;
-let distance2;
-let minion2Click = false;
-let moving2 = false;
+let lineX2;                                                         //Used to create line from minions
+let lineY2;                                                         //Used to create line from minions
+let minion2;                                                        //Used to create minion
+let distance2;                                                      //Used to find distance inside minion
+let minion2Click = false;                                           //So minion can only move when selected
+let moving2 = false;                                                //So minion can only move when selected
 
 //Minion 3
-let lineX3;
-let lineY3;
-let minion3;
-let distance3;
-let minion3Click = false;
-let moving3 = false;
+let lineX3;                                                         //Used to create line from minions
+let lineY3;                                                         //Used to create line from minions
+let minion3;                                                        //Used to create minion
+let distance3;                                                      //Used to find distance inside minion
+let minion3Click = false;                                           //So minion can only move when selected
+let moving3 = false;                                                //So minion can only move when selected
 
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
@@ -93,9 +93,9 @@ function setup() {
   base = new Sprite(500, 550);                          //Correlates to First sprite and keyboard movement
   base.collider = 'kinematic'                           //Removes rotation of spite after collision
 
-  minion1 = createSprite(440, 550, radius);
-  minion2 = createSprite(560, 550, radius);
-  minion3 = createSprite(500, 490, radius);
+  minion1 = createSprite(440, 550, radius);             //Creates mionion
+  minion2 = createSprite(560, 550, radius);             //Creates mionion
+  minion3 = createSprite(500, 490, radius);             //Creates mionion
 
 }
 
@@ -110,17 +110,17 @@ function draw() {
   buyUpgrades();                                          //Runs Custom Function
   mouseClicked();
 
-  minionPress1();
-  createLine1();
-  minionMovement1();
+  minionPress1();                                         //Runs Custom Function
+  createLine1();                                          //Runs Custom Function
+  minionMovement1();                                      //Runs Custom Function
 
-  minionPress2();
-  createLine2();
-  minionMovement2();
+  minionPress2();                                         //Runs Custom Function
+  createLine2();                                          //Runs Custom Function
+  minionMovement2();                                      //Runs Custom Function
 
-  minionPress3();
-  createLine3();
-  minionMovement3();
+  minionPress3();                                         //Runs Custom Function
+  createLine3();                                          //Runs Custom Function
+  minionMovement3();                                      //Runs Custom Function
 }
 
 function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
@@ -244,7 +244,7 @@ function p1Movement() {
   } else base.vel.x = 0
 }
 
-function minionMovement1(){
+function minionMovement1(){                                                    //Moves minion to where the mouse is pressed
   if(mouse.presses() && moving1 == true){
     minion1.moveTo(mouseX, mouseY);
     minion1Click = false;
@@ -252,7 +252,7 @@ function minionMovement1(){
     }
 }
 
-function minionPress1(){
+function minionPress1(){                                                      //Only allows minion to move when selected
   distance1 = dist(mouseX, mouseY, minion1.x, minion1.y);
   if(distance1 < radius && mouse.presses()){
       minion1Click = true;
@@ -260,7 +260,7 @@ function minionPress1(){
   }
 }
 
-function createLine1(){
+function createLine1(){                                                      //creates a line to show where minion will move to
   if(minion1Click == true && moving1 == false){
     lineX = mouseX;
     lineY = mouseY;
@@ -271,7 +271,7 @@ function createLine1(){
     }
 }
 
-function minionMovement2(){
+function minionMovement2(){                                                 //Moves minion to where the mouse is pressed
   if(mouse.presses() && moving2 == true){
     minion2.moveTo(mouseX, mouseY);
     minion2Click = false;
@@ -279,7 +279,7 @@ function minionMovement2(){
     }
 }
 
-function minionPress2(){
+function minionPress2(){                                                  //Only allows minion to move when selected
   distance2 = dist(mouseX, mouseY, minion2.x, minion2.y);
   if(distance2 < radius && mouse.presses()){
       minion2Click = true;
@@ -287,7 +287,7 @@ function minionPress2(){
   }
 }
 
-function createLine2(){
+function createLine2(){                                                 //creates a line to show where minion will move to
   if(minion2Click == true && moving2 == false){
     lineX2 = mouseX;
     lineY2 = mouseY;
@@ -298,7 +298,7 @@ function createLine2(){
     }
 }
 
-function minionMovement3(){
+function minionMovement3(){                                             //Moves minion to where the mouse is pressed
   if(mouse.presses() && moving3 == true){
     minion3.moveTo(mouseX, mouseY);
     minion3Click = false;
@@ -306,7 +306,7 @@ function minionMovement3(){
     }
 }
 
-function minionPress3(){
+function minionPress3(){                                                //Only allows minion to move when selected
   distance3 = dist(mouseX, mouseY, minion3.x, minion3.y);
   if(distance3 < radius && mouse.presses()){
       minion3Click = true;
@@ -314,7 +314,7 @@ function minionPress3(){
   }
 }
 
-function createLine3(){
+function createLine3(){                                                 //creates a line to show where minion will move to
   if(minion3Click == true && moving3 == false){
     lineX3 = mouseX;
     lineY3 = mouseY;

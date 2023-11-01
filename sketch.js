@@ -15,8 +15,8 @@ GoldCoinArray = new Array();                                        //Holds Gold
 let wormImg;
 let goldOreImg;
 
-goldOreArray = new Array();
-wormArray = new Array();
+goldOreArray = new Array();                                         //Holds sprites to check collisions
+wormArray = new Array();                                            //Holds sprites to check collisions
 
 let goldCount = 0;                                                  //Holds Resource Value and Displays text in status bar
 let wormCount = 0;
@@ -74,7 +74,7 @@ function draw() {
   resourceStatusBar();                                    //Runs Custom Function
   resourceCollectionMechanics();                          //Runs Custom Function
   p1Movement();                                           //Runs Custom Keyboard Movement Function
-
+}
 
 
   function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
@@ -134,7 +134,7 @@ function draw() {
       }
     }
   }
-}
+
 
 function goldGeneration() {
   let goldOre = new Sprite()                                      //Creates Gold Ore Sprite

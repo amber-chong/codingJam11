@@ -12,6 +12,8 @@ let GoldCoinIndex = 0;                                              //Iterate Th
 let timer = 15;                                                     //Timer To Stagger Animation
 GoldCoinArray = new Array();                                        //Holds Gold Coin Images
 
+let GoldCount = 0;                                                  //Holds Resource Value and Displays text in status bar
+
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
   GoldCoin2 = loadImage('Assets/Images/GoldCoin/goldCoin2.png');    //Preloads Images 
@@ -42,7 +44,8 @@ function setup() {
 function draw() {
   //code here
   background('black');
-  resourceStatusBar();
+  resourceStatusBar();                            //Runs Custom Function
+  resourceCollectionMechanics();                  //Runs Custom Function
 
 }
 
@@ -62,11 +65,21 @@ function resourceStatusBar() {                    //Draws The Status Bar in the 
   }
   timer = 15;                                     //Resets Timer Used to stagger coin animation
   } 
+  
   image(GoldCoinArray[GoldCoinIndex], 10, 15);    //Draws the coin stored at a specific index of the array
+  
+  textAlign(LEFT, CENTER);                        //Displays GoldCount Value in Status Bar
+  textSize(18);                                   //Displays GoldCount Value in Status Bar 
+  noStroke();                                     //Displays GoldCount Value in Status Bar
+  fill('gold');                                   //Displays GoldCount Value in Status Bar
+  text(GoldCount, 40, 33);                        //Displays GoldCount Value in Status Bar
+
+
 }
 
+function resourceCollectionMechanics() {           
 
-
+}
 
 
 

@@ -29,6 +29,8 @@ let wormSpawnTimer = 600;                                           //Used for R
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
+let player;
+
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
   GoldCoin2 = loadImage('Assets/Images/GoldCoin/goldCoin2.png');    //Preloads Images 
@@ -58,8 +60,8 @@ function setup() {
     GoldCoin7,                                          //Push Preloaded Images Into Array
     GoldCoin8,                                          //Push Preloaded Images Into Array
     GoldCoin9);                                         //Push Preloaded Images Into Array
-    
-  new Sprite(100, 100);
+
+  player = new Sprite(100, 100);                        //Correlates to First sprite and keyboard movement
 }
 
 function draw() {
@@ -69,6 +71,7 @@ function draw() {
   background('black');
   resourceStatusBar();                                  //Runs Custom Function
   resourceCollectionMechanics();                        //Runs Custom Function
+  p1Movement();                                         //Runs Custom Keyboard Movement Function
 
   if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 15 secconds
     goldOreArray.push(goldGeneration());                //Runs Custom Function and stores in array to check for collisions
@@ -137,6 +140,19 @@ function wormGeneration() {
   return worm
 }
 
+function p1Movement() {
+  if (kb.pressing('arrowUp')) {                   //Vertical Movement
+    player.vel.y = -10;
+  } else if (kb.pressing('arrowDown')) {
+    player.vel.y = +10
+  } else player.vel.y = 0
+
+  if (kb.pressing('arrowRight')) {                //Horizontal Movement
+    player.vel.x = +10;
+  } else if (kb.pressing('arrowLeft')) {
+    player.vel.x = -10
+  } else player.vel.x = 0
+}
 
 
 //Credit

@@ -153,8 +153,9 @@ function wormGeneration() {
   worm.scale = 2
   worm.x = random(60, width - 60)
   worm.y = random(60, height - 60)
-  worm.w = 40
-  worm.h = 20
+  worm.w = 45
+  worm.h = 15
+  
   worm.debug = true;
   return worm
 }

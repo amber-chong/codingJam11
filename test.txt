@@ -1,7 +1,0 @@
-* clone
-* push
-pull
-* add
-* commit
-* status
-log

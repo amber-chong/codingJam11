@@ -5,3 +5,5 @@
 * pull - takes new version (if someone else has made changes)
 * status - shows commits/general status
 * log - shows manual updates
+
+git add . - adds all new changes to repo

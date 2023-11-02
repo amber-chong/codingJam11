@@ -190,8 +190,8 @@ function goldGeneration() {
   let goldOre = new Sprite()                                      //Creates Gold Ore Sprite
   goldOre.img = goldOreImg
   goldOre.scale = 0.1
-  goldOre.x = random(60, width - 60)
-  goldOre.y = random(60, height - 60)
+  goldOre.x = random(base.x-width/2, base.x+width/2)
+  goldOre.y = random(base.y-height/2, base.y+height/2)
   goldOre.w = 40
   goldOre.h = 20
   return goldOre
@@ -201,8 +201,8 @@ function wormGeneration() {
   let worm = new Sprite()                                         //Creates Worm Sprite
   worm.img = wormImg
   worm.scale = 2
-  worm.x = random(60, width - 60)
-  worm.y = random(60, height - 60)
+  worm.x = random(base.x-width/2, base.x+width/2)
+  worm.y = random(base.y-height/2, base.y+height/2)
   worm.w = 45
   worm.h = 15
   return worm

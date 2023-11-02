@@ -1,7 +1,7 @@
 * clone
-push
+* push
 pull
-add
-commit
-status
+* add
+* commit
+* status
 log

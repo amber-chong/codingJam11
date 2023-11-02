@@ -94,17 +94,21 @@ function setup() {
   base.collider = 'kinematic'                           //Removes rotation of spite after collision
 
   minion1 = createSprite(440, 550, radius);             //Creates mionion
-  minion1.collider = 'kinematic' 
+  minion1.collider = 'kinematic'
   minion2 = createSprite(560, 550, radius);             //Creates mionion
-  minion2.collider = 'kinematic' 
+  minion2.collider = 'kinematic'
   minion3 = createSprite(500, 490, radius);             //Creates mionion
-  minion3.collider = 'kinematic' 
+  minion3.collider = 'kinematic'
 
 }
 
 function draw() {
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
+
+camera.x = base.x;
+camera.y = base.y;
+
 
   background('black');
   resourceStatusBar();                                    //Runs Custom Function
@@ -143,7 +147,7 @@ function resourceStatusBar() {                          //Draws The Status Bar i
   }
 
   image(GoldCoinArray[GoldCoinIndex], 80, 15);          //Draws the coin stored at a specific index of the array
-  image(wormImg, 15, 15);                                //Draws Worm in status bar
+  image(wormImg, 15, 15);                               //Draws Worm in status bar
 
   textAlign(LEFT, CENTER);                              //Displays GoldCount Value in Status Bar
   textSize(18);                                         //Displays GoldCount Value in Status Bar 
@@ -166,21 +170,17 @@ function resourceCollectionMechanics() {
     wormSpawnTimerExec = floor(random(0, 600));         //Use of floor() to round to nearest whole int
   }
 
-  for (let i = 0; i < goldOreArray.length; i++) {               //Loops through GoldOreArray
-    if (goldOreArray[i].collides(minion1) || goldOreArray[i].collides(minion2) || goldOreArray[i].collides(minion3)) {                     //Checks for collision between each instance of array and play
-      fill('green');
-      rect(goldOreArray[i], goldOreArray[i] - 30, 40, 15);
-      goldOreArray[i].remove();                                 //Removes Sprite after collision
+  for (let i = 0; i < goldOreArray.length; i++) {                                                                                    //Loops through GoldOreArray
+    if (goldOreArray[i].collides(minion1) || goldOreArray[i].collides(minion2) || goldOreArray[i].collides(minion3)) {               //Checks for collision between each instance of array and play
+      goldOreArray[i].remove();                                                                                                      //Removes Sprite after collision
       goldCount++;
     }
   }
 
-  for (let i = 0; i < wormArray.length; i++) {                  //Loops through WormArray
-    if (wormArray[i].collides(minion1) || wormArray[i].collides(minion2) || wormArray[i].collides(minion3)){                        //Checks for collision between each instance of array and player
-      fill('green');
-      rect(wormArray[i], wormArray[i] - 30, 40, 15);
-      wormArray[i].remove();                                    //Removes Sprite after collision
-      wormCount++;                                              //Adds to the currency in top left
+  for (let i = 0; i < wormArray.length; i++) {                                                                                       //Loops through WormArray
+    if (wormArray[i].collides(minion1) || wormArray[i].collides(minion2) || wormArray[i].collides(minion3)) {                        //Checks for collision between each instance of array and player
+      wormArray[i].remove();                                                                                                         //Removes Sprite after collision
+      wormCount++;                                                                                                                   //Adds to the currency in top left
     }
   }
 }
@@ -223,109 +223,109 @@ function buyUpgrades() {
     stroke('white');
     fill(211, 211, 211, 80)
     rect(width, height / 2, 300, 450, 5);
-    image(BSXImg, width-150, height/2-220, 30, 30)
+    image(BSXImg, width - 150, height / 2 - 220, 30, 30)
   }
 }
 
-function mouseClicked(){       
-  if(mouseX >= 854 && mouseX <= 869 && mouseY >= 84 && mouseY <= 100) {                   //Closes Buy Station
+function mouseClicked() {
+  if (mouseX >= 854 && mouseX <= 869 && mouseY >= 84 && mouseY <= 100) {                   //Closes Buy Station
     buyStationOpen = false;
-}
+  }
 }
 
 function p1Movement() {
-  if (kb.pressing('arrowUp') && base.y > 60 + base.h / 2) {                           //Vertical Movement
+  if (kb.pressing('arrowUp')) {                           //Vertical Movement
     base.vel.y = -10;
-  } else if (kb.pressing('arrowDown') && base.y < height - 60 - base.h / 2) {
+  } else if (kb.pressing('arrowDown')) {
     base.vel.y = +10
   } else base.vel.y = 0
 
-  if (kb.pressing('arrowRight') && base.x < width - 60 - base.w / 2) {                //Horizontal Movement
+  if (kb.pressing('arrowRight')) {                //Horizontal Movement
     base.vel.x = +10;
-  } else if (kb.pressing('arrowLeft') && base.x > 60 + base.w / 2) {
+  } else if (kb.pressing('arrowLeft')) {
     base.vel.x = -10
   } else base.vel.x = 0
 }
 
-function minionMovement1(){                                                    //Moves minion to where the mouse is pressed
-  if(mouse.presses() && moving1 == true){
+function minionMovement1() {                                                    //Moves minion to where the mouse is pressed
+  if (mouse.presses() && moving1 == true) {
     minion1.moveTo(mouseX, mouseY);
     minion1Click = false;
     moving1 = false;
-    }
-}
-
-function minionPress1(){                                                      //Only allows minion to move when selected
-  distance1 = dist(mouseX, mouseY, minion1.x, minion1.y);
-  if(distance1 < radius && mouse.presses()){
-      minion1Click = true;
-      moving1 = false;
   }
 }
 
-function createLine1(){                                                      //creates a line to show where minion will move to
-  if(minion1Click == true && moving1 == false){
+function minionPress1() {                                                      //Only allows minion to move when selected
+  distance1 = dist(mouseX, mouseY, minion1.x, minion1.y);
+  if (distance1 < radius && mouse.presses()) {
+    minion1Click = true;
+    moving1 = false;
+  }
+}
+
+function createLine1() {                                                      //creates a line to show where minion will move to
+  if (minion1Click == true && moving1 == false) {
     lineX = mouseX;
     lineY = mouseY;
     line(minion1.x, minion1.y, lineX, lineY);
-    if(distance1 > radius && mouse.presses()){
-        moving1 = true;
+    if (distance1 > radius && mouse.presses()) {
+      moving1 = true;
     }
-    }
+  }
 }
 
-function minionMovement2(){                                                 //Moves minion to where the mouse is pressed
-  if(mouse.presses() && moving2 == true){
+function minionMovement2() {                                                 //Moves minion to where the mouse is pressed
+  if (mouse.presses() && moving2 == true) {
     minion2.moveTo(mouseX, mouseY);
     minion2Click = false;
     moving2 = false;
-    }
-}
-
-function minionPress2(){                                                  //Only allows minion to move when selected
-  distance2 = dist(mouseX, mouseY, minion2.x, minion2.y);
-  if(distance2 < radius && mouse.presses()){
-      minion2Click = true;
-      moving2 = false;
   }
 }
 
-function createLine2(){                                                 //creates a line to show where minion will move to
-  if(minion2Click == true && moving2 == false){
+function minionPress2() {                                                  //Only allows minion to move when selected
+  distance2 = dist(mouseX, mouseY, minion2.x, minion2.y);
+  if (distance2 < radius && mouse.presses()) {
+    minion2Click = true;
+    moving2 = false;
+  }
+}
+
+function createLine2() {                                                 //creates a line to show where minion will move to
+  if (minion2Click == true && moving2 == false) {
     lineX2 = mouseX;
     lineY2 = mouseY;
     line(minion2.x, minion2.y, lineX2, lineY2);
-    if(distance2 > radius && mouse.presses()){
-        moving2 = true;
+    if (distance2 > radius && mouse.presses()) {
+      moving2 = true;
     }
-    }
-}
-
-function minionMovement3(){                                             //Moves minion to where the mouse is pressed
-  if(mouse.presses() && moving3 == true){
-    minion3.moveTo(mouseX, mouseY);
-    minion3Click = false;
-    moving3 = false;
-    }
-}
-
-function minionPress3(){                                                //Only allows minion to move when selected
-  distance3 = dist(mouseX, mouseY, minion3.x, minion3.y);
-  if(distance3 < radius && mouse.presses()){
-      minion3Click = true;
-      moving3 = false;
   }
 }
 
-function createLine3(){                                                 //creates a line to show where minion will move to
-  if(minion3Click == true && moving3 == false){
+function minionMovement3() {                                             //Moves minion to where the mouse is pressed
+  if (mouse.presses() && moving3 == true) {
+    minion3.moveTo(mouseX, mouseY);
+    minion3Click = false;
+    moving3 = false;
+  }
+}
+
+function minionPress3() {                                                //Only allows minion to move when selected
+  distance3 = dist(mouseX, mouseY, minion3.x, minion3.y);
+  if (distance3 < radius && mouse.presses()) {
+    minion3Click = true;
+    moving3 = false;
+  }
+}
+
+function createLine3() {                                                 //creates a line to show where minion will move to
+  if (minion3Click == true && moving3 == false) {
     lineX3 = mouseX;
     lineY3 = mouseY;
     line(minion3.x, minion3.y, lineX3, lineY3);
-    if(distance3 > radius && mouse.presses()){
-        moving3 = true;
+    if (distance3 > radius && mouse.presses()) {
+      moving3 = true;
     }
-    }
+  }
 }
 
 //Credit

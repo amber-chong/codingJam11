@@ -59,6 +59,14 @@ let distance3;                                                      //Used to fi
 let minion3Click = false;                                           //So minion can only move when selected
 let moving3 = false;                                                //So minion can only move when selected
 
+//screens
+let LOADING = 0;
+let MAIN_MENU = 1;
+let GAME = 2;
+let CREDITS = 5;
+
+let currentScreen = LOADING;
+
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
   GoldCoin2 = loadImage('Assets/Images/GoldCoin/goldCoin2.png');    //Preloads Images 
@@ -100,14 +108,47 @@ function setup() {
   minion3 = createSprite(500, 490, radius);             //Creates mionion
   minion3.collider = 'kinematic'
 
+  /*
+  startButton = createButton('Start');
+  startButton.position(350, 350)
+  startButton.mouseClicked(drawGame);
+
+  creditButton = createButton('Credits')
+  creditButton.position(650, 350)
+  creditButton.mouseClicked(drawCredits)
+
+  backButton = createButton('Back')
+  backButton.position(505, 450)
+  backButton.mouseClicked(drawMenuScreen)
+  */
 }
 
 function draw() {
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
 
-camera.x = base.x;
-camera.y = base.y;
+  camera.x = base.x;
+  camera.y = base.y;
+
+  /*
+    switch (currentScreen) {
+      case LOADING:
+        drawLoadingScreen();
+        break;
+      case MAIN_MENU:
+        drawMenuScreen();
+        break;
+      case GAME:
+        drawGame();
+        break;
+      case CREDITS:
+        drawCredits();
+        break;
+    }
+    if (frameCount == 60){
+      currentScreen = MAIN_MENU;
+  }
+  */
 
 
   background('black');
@@ -190,8 +231,8 @@ function goldGeneration() {
   let goldOre = new Sprite()                                      //Creates Gold Ore Sprite
   goldOre.img = goldOreImg
   goldOre.scale = 0.1
-  goldOre.x = random(base.x-width/2, base.x+width/2)
-  goldOre.y = random(base.y-height/2, base.y+height/2)
+  goldOre.x = random(base.x - width / 2, base.x + width / 2)
+  goldOre.y = random(base.y - height / 2, base.y + height / 2)
   goldOre.w = 40
   goldOre.h = 20
   return goldOre
@@ -201,8 +242,8 @@ function wormGeneration() {
   let worm = new Sprite()                                         //Creates Worm Sprite
   worm.img = wormImg
   worm.scale = 2
-  worm.x = random(base.x-width/2, base.x+width/2)
-  worm.y = random(base.y-height/2, base.y+height/2)
+  worm.x = random(base.x - width / 2, base.x + width / 2)
+  worm.y = random(base.y - height / 2, base.y + height / 2)
   worm.w = 45
   worm.h = 15
   return worm
@@ -328,6 +369,40 @@ function createLine3() {                                                 //creat
   }
 }
 
+//===SCREEN CODE===
+/*
+function drawMenuScreen() {
+  print('whoa main menu')
+  currentScreen = MAIN_MENU
+
+  startButton.show();
+  creditButton.show();
+  backButton.hide();
+}
+
+function drawLoadingScreen() {
+  print('loading')
+  startButton.hide();
+  creditButton.hide();
+  backButton.hide();
+}
+
+function drawGame() {
+  print('GAME')
+  currentScreen = GAME;
+  startButton.hide();
+  creditButton.hide();
+  backButton.show();
+}
+
+function drawCredits() {
+  print('credits')
+  currentScreen = CREDITS;
+  startButton.hide();
+  creditButton.hide();
+  backButton.show();
+}
+*/
 //Credit
 //Art Sourced From OpenGameArt.Org
 //GoldCoin - morgan3d

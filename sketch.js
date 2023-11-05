@@ -108,7 +108,7 @@ function setup() {
   minion3 = createSprite(500, 490, radius);             //Creates mionion
   minion3.collider = 'kinematic'
 
-  /*
+/*
   startButton = createButton('Start');
   startButton.position(350, 350)
   startButton.mouseClicked(drawGame);
@@ -127,10 +127,10 @@ function draw() {
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
 
-  camera.x = base.x;
-  camera.y = base.y;
+camera.x = base.x;
+camera.y = base.y;
 
-  /*
+/*
     switch (currentScreen) {
       case LOADING:
         drawLoadingScreen();
@@ -156,7 +156,7 @@ function draw() {
   resourceCollectionMechanics();                          //Runs Custom Function
   p1Movement();                                           //Runs Custom Keyboard Movement Function
   buyUpgrades();                                          //Runs Custom Function
-  mouseClicked();
+  buyStation();
 
   minionPress1();                                         //Runs Custom Function
   createLine1();                                          //Runs Custom Function
@@ -231,8 +231,8 @@ function goldGeneration() {
   let goldOre = new Sprite()                                      //Creates Gold Ore Sprite
   goldOre.img = goldOreImg
   goldOre.scale = 0.1
-  goldOre.x = random(base.x - width / 2, base.x + width / 2)
-  goldOre.y = random(base.y - height / 2, base.y + height / 2)
+  goldOre.x = random(base.x-width/2, base.x+width/2)
+  goldOre.y = random(base.y-height/2, base.y+height/2)
   goldOre.w = 40
   goldOre.h = 20
   return goldOre
@@ -242,34 +242,43 @@ function wormGeneration() {
   let worm = new Sprite()                                         //Creates Worm Sprite
   worm.img = wormImg
   worm.scale = 2
-  worm.x = random(base.x - width / 2, base.x + width / 2)
-  worm.y = random(base.y - height / 2, base.y + height / 2)
+  worm.x = random(base.x-width/2, base.x+width/2)
+  worm.y = random(base.y-height/2, base.y+height/2)
   worm.w = 45
   worm.h = 15
   return worm
 }
 
 function buyUpgrades() {
-  if (mouseX >= width - 15 && mouseX <= width && mouseY >= height / 2 - 40 && mouseY <= height / 2 + 40) {    //Checks if Mouse is over buy station tab
-    buyStationOpen = true;                                                                                    // sets value to true
+  if ((mouseX >= width - 15 && mouseX <= width && mouseY >= height / 2 - 40 && mouseY <= height / 2 + 40) && mouse.presses()) {    //Checks if Mouse is over buy station tab
+    buyStationOpen = true;                                                                                                         // sets value to true
   }
 
-  if (buyStationOpen == false) {                                                                              //Buy station is closed if value is false
+  if (buyStationOpen == false) {                                                //Buy station is closed if value is false
     rectMode(CENTER);
     stroke('white');
     fill(211, 211, 211, 80);
     rect(width, height / 2, 30, 80, 5);
-  } else {                                                                                                    // Buy station i sopen if value is true
+  } else {                                                                      // Buy station i sopen if value is true
     rectMode(CENTER);
     stroke('white');
     fill(211, 211, 211, 80)
-    rect(width, height / 2, 300, 450, 5);
-    image(BSXImg, width - 150, height / 2 - 220, 30, 30)
+    rect(width, height / 2, 300, 450, 5); 
+    image(BSXImg, width - 150, height / 2 - 220, 30, 30)                        //Close BuyStation Image
+    
+    //WRITE CODE FOR PURCHASES AND UPGRADES HERE 
+    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
+    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
+    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
+    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
+    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
+    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
+
   }
 }
 
-function mouseClicked() {
-  if (mouseX >= 854 && mouseX <= 869 && mouseY >= 84 && mouseY <= 100) {                   //Closes Buy Station
+function buyStation() {
+  if ((mouseX >= 854 && mouseX <= 869 && mouseY >= 84 && mouseY <= 100) && mouse.presses()) {                   //Closes Buy Station
     buyStationOpen = false;
   }
 }

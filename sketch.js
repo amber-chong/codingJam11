@@ -127,8 +127,8 @@ function draw() {
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
 
-camera.x = base.x;
-camera.y = base.y;
+//camera.x = base.x;
+//camera.y = base.y;
 
 /*
     switch (currentScreen) {
@@ -212,7 +212,7 @@ function resourceCollectionMechanics() {
   }
 
   for (let i = 0; i < goldOreArray.length; i++) {                                                                                    //Loops through GoldOreArray
-    if (goldOreArray[i].collides(minion1) || goldOreArray[i].collides(minion2) || goldOreArray[i].collides(minion3)) {               //Checks for collision between each instance of array and play
+    if (goldOreArray[i].collides(minion1) || goldOreArray[i].collides(minion2) || goldOreArray[i].collides(minion3)) {               //Checks for collision between each instance of array and player
       goldOreArray[i].remove();                                                                                                      //Removes Sprite after collision
       goldCount++;
     }

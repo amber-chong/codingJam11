@@ -264,6 +264,12 @@ function buyUpgrades() {
     stroke('white');
     fill(211, 211, 211, 80)
     rect(width, height / 2, 300, 450, 5); 
+    line(width-75, 125, width-75, height-75);
+    
+    for(let i = 125; i<525; i+=50){
+      line(width-150, i, width, i);
+    }
+    
     image(BSXImg, width - 150, height / 2 - 220, 30, 30)                        //Close BuyStation Image
     
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE 
@@ -272,7 +278,14 @@ function buyUpgrades() {
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
-    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
+    
+    //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
+    //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
+    //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
+    //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
+    //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
+    //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
+  
 
   }
 }

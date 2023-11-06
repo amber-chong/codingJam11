@@ -63,7 +63,7 @@ let moving3 = false;                                                //So minion 
 let LOADING = 0;
 let MAIN_MENU = 1;
 let GAME = 2;
-let CREDITS = 5;
+let CREDITS = 3;
 
 let currentScreen = LOADING;
 
@@ -108,19 +108,22 @@ function setup() {
   minion3 = createSprite(500, 490, radius);             //Creates mionion
   minion3.collider = 'kinematic'
 
-  /*
-    startButton = createButton('Start');
-    startButton.position(350, 350)
-    startButton.mouseClicked(drawGame);
-  
-    creditButton = createButton('Credits')
-    creditButton.position(650, 350)
-    creditButton.mouseClicked(drawCredits)
-  
-    backButton = createButton('Back')
-    backButton.position(505, 450)
-    backButton.mouseClicked(drawMenuScreen)
-    */
+  base.visible = false;
+  minion1.visible = false;
+  minion2.visible = false;
+  minion3.visible = false;
+
+  startButton = createButton('Start');
+  startButton.position(350, 350)
+  startButton.mouseClicked(drawGame);
+
+  creditButton = createButton('Credits')
+  creditButton.position(650, 350)
+  creditButton.mouseClicked(drawCredits)
+
+  backButton = createButton('Back')
+  backButton.position(505, 450)
+  backButton.mouseClicked(drawMenuScreen)
 }
 
 function draw() {
@@ -129,7 +132,6 @@ function draw() {
 
   //camera.x = base.x;
   //camera.y = base.y;
-
   /*
       switch (currentScreen) {
         case LOADING:
@@ -144,12 +146,23 @@ function draw() {
         case CREDITS:
           drawCredits();
           break;
-      }
-      if (frameCount == 60){
-        currentScreen = MAIN_MENU;
-    }
-    */
+      }*/
 
+  if (currentScreen == LOADING) {
+    drawLoadingScreen();
+  }
+  else if (currentScreen == MAIN_MENU) {
+    drawMenuScreen();
+  }
+  else if (currentScreen == GAME) {
+    drawGame();
+  }
+  else if (currentScreen == CREDITS) {
+    drawCredits();
+  }
+  if (frameCount == 60 && currentScreen == LOADING) {
+    currentScreen = MAIN_MENU;
+  }
 
   background('black');
   resourceStatusBar();                                    //Runs Custom Function
@@ -393,7 +406,6 @@ function createLine3() {                                                 //creat
 }
 
 //===SCREEN CODE===
-/*
 function drawMenuScreen() {
   print('whoa main menu')
   currentScreen = MAIN_MENU
@@ -401,6 +413,11 @@ function drawMenuScreen() {
   startButton.show();
   creditButton.show();
   backButton.hide();
+
+  base.visible = false;
+  minion1.visible = false;
+  minion2.visible = false;
+  minion3.visible = false;
 }
 
 function drawLoadingScreen() {
@@ -416,6 +433,15 @@ function drawGame() {
   startButton.hide();
   creditButton.hide();
   backButton.show();
+
+  base.visible = true;
+  minion1.visible = true;
+  minion2.visible = true;
+  minion3.visible = true;
+
+  goldSpawnTimer--;                                       //Decrements Timer
+  wormSpawnTimer--;                                       //Decrements Timer
+
 }
 
 function drawCredits() {
@@ -424,8 +450,11 @@ function drawCredits() {
   startButton.hide();
   creditButton.hide();
   backButton.show();
+  base.visible = false;
+  minion1.visible = false;
+  minion2.visible = false;
+  minion3.visible = false;
 }
-*/
 //Credit
 //Art Sourced From OpenGameArt.Org
 //GoldCoin - morgan3d

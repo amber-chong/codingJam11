@@ -108,47 +108,47 @@ function setup() {
   minion3 = createSprite(500, 490, radius);             //Creates mionion
   minion3.collider = 'kinematic'
 
-/*
-  startButton = createButton('Start');
-  startButton.position(350, 350)
-  startButton.mouseClicked(drawGame);
-
-  creditButton = createButton('Credits')
-  creditButton.position(650, 350)
-  creditButton.mouseClicked(drawCredits)
-
-  backButton = createButton('Back')
-  backButton.position(505, 450)
-  backButton.mouseClicked(drawMenuScreen)
-  */
+  /*
+    startButton = createButton('Start');
+    startButton.position(350, 350)
+    startButton.mouseClicked(drawGame);
+  
+    creditButton = createButton('Credits')
+    creditButton.position(650, 350)
+    creditButton.mouseClicked(drawCredits)
+  
+    backButton = createButton('Back')
+    backButton.position(505, 450)
+    backButton.mouseClicked(drawMenuScreen)
+    */
 }
 
 function draw() {
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
 
-//camera.x = base.x;
-//camera.y = base.y;
+  //camera.x = base.x;
+  //camera.y = base.y;
 
-/*
-    switch (currentScreen) {
-      case LOADING:
-        drawLoadingScreen();
-        break;
-      case MAIN_MENU:
-        drawMenuScreen();
-        break;
-      case GAME:
-        drawGame();
-        break;
-      case CREDITS:
-        drawCredits();
-        break;
+  /*
+      switch (currentScreen) {
+        case LOADING:
+          drawLoadingScreen();
+          break;
+        case MAIN_MENU:
+          drawMenuScreen();
+          break;
+        case GAME:
+          drawGame();
+          break;
+        case CREDITS:
+          drawCredits();
+          break;
+      }
+      if (frameCount == 60){
+        currentScreen = MAIN_MENU;
     }
-    if (frameCount == 60){
-      currentScreen = MAIN_MENU;
-  }
-  */
+    */
 
 
   background('black');
@@ -231,8 +231,8 @@ function goldGeneration() {
   let goldOre = new Sprite()                                      //Creates Gold Ore Sprite
   goldOre.img = goldOreImg
   goldOre.scale = 0.1
-  goldOre.x = random(base.x-width/2, base.x+width/2)
-  goldOre.y = random(base.y-height/2, base.y+height/2)
+  goldOre.x = random(base.x - width / 2, base.x + width / 2)
+  goldOre.y = random(base.y - height / 2, base.y + height / 2)
   goldOre.w = 40
   goldOre.h = 20
   return goldOre
@@ -242,8 +242,8 @@ function wormGeneration() {
   let worm = new Sprite()                                         //Creates Worm Sprite
   worm.img = wormImg
   worm.scale = 2
-  worm.x = random(base.x-width/2, base.x+width/2)
-  worm.y = random(base.y-height/2, base.y+height/2)
+  worm.x = random(base.x - width / 2, base.x + width / 2)
+  worm.y = random(base.y - height / 2, base.y + height / 2)
   worm.w = 45
   worm.h = 15
   return worm
@@ -261,31 +261,32 @@ function buyUpgrades() {
     rect(width, height / 2, 30, 80, 5);
   } else {                                                                      // Buy station i sopen if value is true
     rectMode(CENTER);
+    textAlign(CENTER, CENTER);
     stroke('white');
     fill(211, 211, 211, 80)
-    rect(width, height / 2, 300, 450, 5); 
-    line(width-75, 125, width-75, height-75);
-    
-    for(let i = 125; i<525; i+=50){
-      line(width-150, i, width, i);
+    rect(width, height / 2, 300, 450, 5);
+
+    line(width - 75, 125, width - 75, height - 75);                                   //Creates vert line within buystation
+    for (let i = 125; i < 525; i += 80) {                                             //Loops to create horiz lines in buystation
+      line(width - 150, i, width, i);
     }
-    
-    image(BSXImg, width - 150, height / 2 - 220, 30, 30)                        //Close BuyStation Image
-    
-    //WRITE CODE FOR PURCHASES AND UPGRADES HERE 
+
+    image(BSXImg, width - 150, height / 2 - 220, 30, 30);                             //Close BuyStation Image
+    text('UPGRADES', width - 65, height / 2 - 202);
+
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
-    
+
     //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
     //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
     //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
     //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
     //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
     //WRITE if STATEMENTS HERE TO EXECUTE PURCHASES
-  
+
 
   }
 }

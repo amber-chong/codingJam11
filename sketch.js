@@ -64,6 +64,21 @@ let distance3;                                                      //Used to fi
 let minion3Click = false;                                           //So minion can only move when selected
 let moving3 = false;                                                //So minion can only move when selected
 
+//capacity and storage      
+let carryNumber1 = 0;                                               //the number the minions are carrying
+let carryNumber2 = 0;
+let carryNumber3 = 0;
+let capacity = 30;                                                  //the max number the minions can carry
+let storage = 0;                                                    //the base storage
+
+//resource 1
+let resource1;                                
+let rx1 = 400;                                                      //resource1's values
+let ry1 = 300;
+let rr1 = 20;
+let totalResource1 = 100;                                           //resource1's total resource
+let extraResource1 = 100;                                           //if the remaining resource is not = to capacity
+
 //screens
 let LOADING = 0;
 let MAIN_MENU = 1;
@@ -103,22 +118,30 @@ function setup() {
     GoldCoin8,                                            //Push Preloaded Images Into Array
     GoldCoin9);                                           //Push Preloaded Images Into Array
 
-  base = new Sprite(baseX, baseY);                          //Correlates to First sprite and keyboard movement
-  base.collider = 'kinematic'                           //Removes rotation of spite after collision
+  //base  
+  base = new Sprite(baseX, baseY);                          
+  base.collider = 'kinematic'                           
 
-  minion1 = createSprite(baseX + 100, 550, radius);             //Creates mionion
-  minion1.collider = 'kinematic'
-  minion2 = createSprite(baseX - 100, 550, radius);             //Creates mionion
-  minion2.collider = 'kinematic'
-  minion3 = createSprite(500, baseY - 100, radius);             //Creates mionion
-  minion3.collider = 'kinematic'
-  
+  //minions
+  minion1 = createSprite(baseX + 100, 550, radius);             //Creates minion
+  minion1.collider = 'dynamic'
+  minion2 = createSprite(baseX - 100, 550, radius);             //Creates minion
+  minion2.collider = 'dynamic'
+  minion3 = createSprite(500, baseY - 100, radius);             //Creates minion
+  minion3.collider = 'dynamic'
 
+  //resources
+  resource1 = createSprite(rx1, ry1, rr1);
+  resource1.collider = 'dynamic'
+
+  //visibility
   base.visible = false;
   minion1.visible = false;
   minion2.visible = false;
   minion3.visible = false;
+  resource1.visible = false;
 
+  //buttons
   startButton = createButton('Start');
   startButton.position(350, 350)
   startButton.mouseClicked(drawGame);
@@ -128,7 +151,7 @@ function setup() {
   creditButton.mouseClicked(drawCredits)
 
   backButton = createButton('Back')
-  backButton.position(505, 450)
+  backButton.position(900, 450)
   backButton.mouseClicked(drawMenuScreen)
 }
 
@@ -184,6 +207,12 @@ function draw() {
   minionPress3();                                         //Runs Custom Function
   createLine3();                                          //Runs Custom Function
   minionMovement3();                                      //Runs Custom Function
+
+  collect();                                              //collects resources
+  dropoff();                                              //adds to storage
+  reduce();                                               //reduce total resource avaliablie
+
+  //write();      //shows stats for storage, carried and resource no.
 }
 
 function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
@@ -418,6 +447,121 @@ function createLine3() {                                                 //creat
   }
 }
 
+function collect(){
+  //minion1
+  if(minion1.overlapping(resource1)){                                 //checks if minions is at resource
+    carryNumber1 +=1;
+
+      if(carryNumber1 >= capacity){                                   //checks that carrynumber is less than capacity
+        carryNumber1 = capacity;
+      }
+
+      if(totalResource1 <= 0){                                      //checks there is resource available
+        carryNumber1 = extraResource1;
+      }
+  }
+
+  //minion2
+  if(minion2.overlapping(resource1)){                               //checks if minions is at resource
+    carryNumber2 +=1;
+
+      if(carryNumber2 >= capacity){                                 //checks that carrynumber is less than capacity
+        carryNumber2 = capacity;
+      }
+
+      if(totalResource1 <= 0){                                      //checks there is resource available
+        carryNumber2 = extraResource1;
+      }
+  }
+
+  //minion3
+  if(minion3.overlapping(resource1)){                               //checks if minions is at resource
+    carryNumber3 +=1;
+
+      if(carryNumber3 >= capacity){                                 //checks that carrynumber is less than capacity
+        carryNumber3 = capacity;
+      }
+
+      if(totalResource1 <= 0){                                      //checks there is resource available
+        carryNumber3 = extraResource1;
+      }
+  }
+}
+
+function reduce(){
+  //minion1
+  if(minion1.overlapping(resource1) && carryNumber1 < capacity){ //if minion1 is overlapping resource
+          totalResource1 -=1; //reduce the resource amount
+          extraResource1 -=1;
+  
+          if(totalResource1 <= 0){ //if resource amount is 0
+              totalResource1 = 0;
+              extraResource1 = carryNumber1;
+          }
+  }
+
+  //minion2
+  if(minion2.overlapping(resource1) && carryNumber2 < capacity){ //if minion2 is overlapping resource
+    totalResource1 -=1; //reduce the resource amount
+    extraResource1 -=1;
+
+    if(totalResource1 <= 0){ //if resource amount is 0
+        totalResource1 = 0;
+        extraResource1 = carryNumber2;
+    }
+  }
+
+  //minion3
+  if(minion3.overlapping(resource1) && carryNumber3 < capacity){ //if minion3 is overlapping resource
+    totalResource1 -=1; //reduce the resource amount
+    extraResource1 -=1;
+
+    if(totalResource1 <= 0){ //if resource amount is 0
+        totalResource1 = 0;
+        extraResource1 = carryNumber3;
+    }
+  }
+}
+
+function dropoff(){
+  //minion1
+  if(minion1.overlapping(base)){                                        //checks minion is at base
+    if(carryNumber1 >= 1){
+        storage += 1;                                                   //adds to storage
+        carryNumber1 -=1                                                //removes from carry
+    }
+  }
+
+  //minion2
+  if(minion2.overlapping(base)){                                        //checks minion is at base
+    if(carryNumber2 >= 1){
+        storage += 1;                                                   //adds to storage
+        carryNumber2 -=1                                                //removes from carry
+    }
+  }
+
+  //minion3
+  if(minion3.overlapping(base)){                                        //checks minion is at base
+    if(carryNumber3 >= 1){
+        storage += 1;                                                   //adds to storage
+        carryNumber3 -=1                                                //removes from carry
+    }
+  }
+}
+
+function write(){
+  textAlign(CENTER, CENTER);
+  textStyle(NORMAL);
+  text("STORAGE", 100, 480);
+  text(""+storage, 100, 500);
+
+  text("CARRY", 200, 480);
+  text(""+(carryNumber1 + carryNumber2 + carryNumber3), 200, 500);
+
+  text("RESOURCE", 300, 480);
+  text(""+totalResource1, 300, 500);
+}
+
 //===SCREEN CODE===
 function drawMenuScreen() {
   print('whoa main menu')
@@ -431,8 +575,6 @@ function drawMenuScreen() {
   minion1.visible = false;
   minion2.visible = false;
   minion3.visible = false;
-
-  
 }
 
 function drawLoadingScreen() {
@@ -453,6 +595,7 @@ function drawGame() {
   minion1.visible = true;
   minion2.visible = true;
   minion3.visible = true;
+  resource1.visible = true;
 
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
@@ -469,6 +612,7 @@ function drawCredits() {
   minion1.visible = false;
   minion2.visible = false;
   minion3.visible = false;
+  resource1.visible = false;
 }
 //Credit
 //Art Sourced From OpenGameArt.Org

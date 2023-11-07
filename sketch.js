@@ -27,6 +27,7 @@ let goldOre;
 
 let buyStationOpen = false;                                         //Buy Station Open/Closed logic
 let BSXImg;                                                         //image for closing buy station
+let speedCost = 1;
 
 let wormSpawnTimer = 600;                                           //Used for Random Spawning of Resources
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
@@ -286,6 +287,33 @@ function buyUpgrades() {
 
     image(BSXImg, width - 150, height / 2 - 220, 30, 30);                             //Close BuyStation Image
     text('UPGRADES', width - 65, height / 2 - 202);
+
+    //BuyStation Box 1
+    for(let i=0; i<45; i+=15){                                                        //Loops and draws >>> for speed
+      triangle(width-135+i, 135, width-135+i, 165, width-115+i, 150)                    //Triangle
+      }
+      textSize(9);                                                                      //specs
+      noStroke();                                                                       //specs
+      fill('white')                                                                     //specs 
+      text('WORM SPEED', width-75-(75/2), 175);                                         //Text
+  
+      if(wormCount >= speedCost){                                                       //Checks saved currency/resource against cost
+        textSize(13);
+          text(speedCost + ' Worms', width-75-(75/2), 190);
+      } else {
+        textSize(13)
+        fill('red')
+        text(speedCost + ' Worms', width-75-(75/2), 190);
+      }
+  
+      if(mouseX > width-150 && mouseX < width-75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost){   //Checks all conditions for purchase
+        minion1.speed = minion1.speed + 2;        
+        minion2.speed = minion2.speed + 2;
+        minion3.speed = minion3.speed + 2;
+        speedCost = speedCost + 10;                       //Increments cost after pruchase
+        wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
+      }
+      
 
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE

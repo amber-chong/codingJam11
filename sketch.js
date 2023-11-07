@@ -122,11 +122,11 @@ function setup() {
   base.collider = 'kinematic'                           
 
   //minions
-  minion1 = createSprite(baseX + 100, 550, radius);             //Creates mionion
+  minion1 = createSprite(baseX + 100, 550, radius);             //Creates minion
   minion1.collider = 'dynamic'
-  minion2 = createSprite(baseX - 100, 550, radius);             //Creates mionion
+  minion2 = createSprite(baseX - 100, 550, radius);             //Creates minion
   minion2.collider = 'dynamic'
-  minion3 = createSprite(500, baseY - 100, radius);             //Creates mionion
+  minion3 = createSprite(500, baseY - 100, radius);             //Creates minion
   minion3.collider = 'dynamic'
 
   //resources
@@ -150,7 +150,7 @@ function setup() {
   creditButton.mouseClicked(drawCredits)
 
   backButton = createButton('Back')
-  backButton.position(505, 450)
+  backButton.position(900, 450)
   backButton.mouseClicked(drawMenuScreen)
 }
 
@@ -209,7 +209,7 @@ function draw() {
 
   collect();                                              //collects resources
   dropoff();                                              //adds to storage
-  reduce();                                               //redude total resource avaliablie
+  reduce();                                               //reduce total resource avaliablie
 
   //write();      //shows stats for storage, carried and resource no.
 }

@@ -35,7 +35,7 @@ let wormSpawnTimer = 600;                                           //Used for R
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
-let spawnMultiplier = 1;
+let spawnMultiplier; 
 let spawnCost = 25;
 
 //base      
@@ -111,6 +111,7 @@ function preload() {
 
 function setup() {
   createCanvas(1000, 600);
+  spawnMultiplier = floor(1);
   baseX = width/2;
   baseY = height/2;
   goldSpawnTimerExec = floor(random(0, 900));             //Initialises First Rand Num For Resource Spawning -- Use of floor() to round to nearest whole int                      
@@ -235,7 +236,6 @@ function draw() {
   collect();                                              //collects resources
   dropoff();                                              //adds to storage
   reduce();                                               //reduce total resource avaliablie
-
   //write();      //shows stats for storage, carried and resource no.
 }
 
@@ -271,12 +271,12 @@ function resourceStatusBar() {                          //Draws The Status Bar i
 function resourceCollectionMechanics() {
   if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 30 secconds
     goldOreArray.push(goldGeneration());                //Runs Custom Function and stores in array to check for collisions
-    goldSpawnTimer = 1800*spawnMultiplier;
+    goldSpawnTimer = floor(1800*spawnMultiplier);
     goldSpawnTimerExec = floor(random(0, 1800*spawnMultiplier));        //Use of floor() to round to nearest whole int
   }
   if (wormSpawnTimerExec == wormSpawnTimer) {           //Allows For random spawn time within 10 secconds
     wormArray.push(wormGeneration());                   //Runs Custom Function and stores in array to check for collisions
-    wormSpawnTimer = 600*spawnMultiplier;
+    wormSpawnTimer = floor(600*spawnMultiplier);
     wormSpawnTimerExec = floor(random(0, 600*spawnMultiplier));         //Use of floor() to round to nearest whole int
   }
 
@@ -403,18 +403,26 @@ function buyUpgrades() {
       
       if(wormCount >= spawnCost){                                                       //Checks saved currency/resource against cost
         textSize(13);
-          text(spawnCostCost + ' Worms', width-75-(75/2), 355);
+          text(spawnCost + ' Worms', width-75-(75/2), 355);
       } else {
         textSize(13)
         fill('red')
         text(spawnCost + ' Worms', width-75-(75/2), 355);
       }
   
-      if(mouseX > width-150 && mouseX < width-75 && mouseY > 285 && mouseY < 365 && mouse.presses() && wormCount >= spawnCost){   //Checks all conditions for purchase
-        spawnMultiplier = spawnMultiplier -0.2                        //Increases Minion hitbox
-        wormCount = wormCount - spawnCost;                //Decrements resource savings after purchase
-        spawnCost = spawnCost + 25;                      //Increments cost after pruchase
+      if(spawnMultiplier < 0.3) {
+        spawnMultiplier = 0.2;
+        rectMode(CORNER);
+        fill('black');
+        rect(width-150, 285, 75, 80);
+        fill('white')
+        text("MAX LVL", width-75-(75/2), 325);
+      }else if(mouseX > width-150 && mouseX < width-75 && mouseY > 285 && mouseY < 365 && mouse.presses() && wormCount >= spawnCost){   //Checks all conditions for purchase
+          spawnMultiplier = spawnMultiplier - 0.2                        //Increases Minion hitbox
+          wormCount = wormCount - spawnCost;                             //Decrements resource savings after purchase
+          spawnCost = spawnCost + 25;                                    //Increments cost after pruchase
       }
+    
 
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE

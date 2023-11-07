@@ -576,6 +576,7 @@ function drawMenuScreen() {
   minion1.visible = false;
   minion2.visible = false;
   minion3.visible = false;
+  resource1.visible = false;
 }
 
 function drawLoadingScreen() {

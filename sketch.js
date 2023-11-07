@@ -27,7 +27,9 @@ let goldOre;
 
 let buyStationOpen = false;                                         //Buy Station Open/Closed logic
 let BSXImg;                                                         //image for closing buy station
+let magnetImg;
 let speedCost = 10;
+let magnetCost = 15;
 
 let wormSpawnTimer = 600;                                           //Used for Random Spawning of Resources
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
@@ -35,8 +37,8 @@ let worm;
 
 //base      
 let base;                                                           //base values
-let baseX = 500;
-let baseY = 550;
+let baseX;
+let baseY;;
 
 //Minion 1                                                          
 let lineX;                                                          //Used to create line from minions
@@ -44,6 +46,7 @@ let lineY;                                                          //Used to cr
 let minion1;                                                        //Used to create minion
 let distance1;                                                      //Used to find distance inside minion
 let radius = 30;                                                    //Used to create line from minions
+let hitboxSize = 30
 let minionSpeed = 1;                                                //Used in purchasing upgrades
 let minion1Click = false;                                           //So minion can only move when selected
 let moving1 = false;                                                //So minion can only move when selected
@@ -100,10 +103,13 @@ function preload() {
   wormImg = loadImage('Assets/Images/worm (2).png');                //Preloads Images 
   goldOreImg = loadImage('Assets/Images/gold_ore.png');             //Preloads Images
   BSXImg = loadImage('Assets/Images/Wii_Minus.png')
+  magnetImg = loadImage('Assets/Images/Magnet.png')
 }
 
 function setup() {
   createCanvas(1000, 600);
+  baseX = width/2;
+  baseY = height/2;
   goldSpawnTimerExec = floor(random(0, 900));             //Initialises First Rand Num For Resource Spawning -- Use of floor() to round to nearest whole int                      
   wormSpawnTimerExec = floor(random(0, 600));             //Initialises First Rand Num For Resource Spawning -- Use of floor() to round to nearest whole int                      
 
@@ -125,10 +131,18 @@ function setup() {
   //minions
   minion1 = createSprite(baseX + 100, 550, radius);             //Creates minion
   minion1.collider = 'kinematic'
+  minion1.w = hitboxSize
+  minion1.h = hitboxSize
+ 
   minion2 = createSprite(baseX - 100, 550, radius);             //Creates minion
   minion2.collider = 'kinematic'
+  minion2.w = hitboxSize
+  minion2.h = hitboxSize
+ 
   minion3 = createSprite(500, baseY - 100, radius);             //Creates minion
   minion3.collider = 'kinematic'
+  minion3.w = hitboxSize
+  minion3.h = hitboxSize
 
   //resources
   resource1 = createSprite(rx1, ry1, rr1);
@@ -158,6 +172,13 @@ function setup() {
 function draw() {
   //camera.x = base.x;
   //camera.y = base.y;
+  
+  minion1.w = hitboxSize        //Allows for magnet powerup
+  minion1.h = hitboxSize        //Allows for magnet powerup
+  minion2.w = hitboxSize        //Allows for magnet powerup
+  minion2.h = hitboxSize        //Allows for magnet powerup
+  minion3.w = hitboxSize        //Allows for magnet powerup
+  minion3.h = hitboxSize        //Allows for magnet powerup
 /*
     switch (currentScreen) {
       case LOADING:
@@ -231,6 +252,7 @@ function resourceStatusBar() {                          //Draws The Status Bar i
     timer = 15;                                         //Resets Timer Used to stagger coin animation
   }
 
+  imageMode(CORNER)
   image(GoldCoinArray[GoldCoinIndex], 80, 15);          //Draws the coin stored at a specific index of the array
   image(wormImg, 15, 15);                               //Draws Worm in status bar
 
@@ -337,11 +359,32 @@ function buyUpgrades() {
       }
   
       if(mouseX > width-150 && mouseX < width-75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost){   //Checks all conditions for purchase
-        minionSpeed = minionSpeed + 1;
-        speedCost = speedCost + 10;                       //Increments cost after pruchase
+        minionSpeed = minionSpeed + 1;                    //Increases Minion movement speed
         wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
+        speedCost = speedCost + 10;                       //Increments cost after pruchase
       }
       
+      //Buystation Box 2
+      imageMode(CENTER);
+      image(magnetImg, width-75-(75/2), 230, 40, 40);
+      fill('white');
+      textSize(10);
+      text('MAGNET', width-75-(75/2), 255)
+      
+      if(wormCount >= magnetCost){                                                       //Checks saved currency/resource against cost
+        textSize(13);
+          text(magnetCost + ' Worms', width-75-(75/2), 270);
+      } else {
+        textSize(13)
+        fill('red')
+        text(magnetCost + ' Worms', width-75-(75/2), 270);
+      }
+  
+      if(mouseX > width-150 && mouseX < width-75 && mouseY > 205 && mouseY < 285 && mouse.presses() && wormCount >= magnetCost){   //Checks all conditions for purchase
+        hitboxSize = hitboxSize*1.75                       //Increases Minion hitbox
+        wormCount = wormCount - magnetCost;                //Decrements resource savings after purchase
+        magnetCost = magnetCost + 15;                      //Increments cost after pruchase
+      }
 
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE

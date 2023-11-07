@@ -32,7 +32,10 @@ let wormSpawnTimer = 600;                                           //Used for R
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
+//base
 let base;
+let baseX = 500;
+let baseY = 550;
 
 //Minion 1                                                          
 let lineX;                                                          //Used to create line from minions
@@ -98,14 +101,14 @@ function setup() {
     GoldCoin8,                                            //Push Preloaded Images Into Array
     GoldCoin9);                                           //Push Preloaded Images Into Array
 
-  base = new Sprite(500, 550);                          //Correlates to First sprite and keyboard movement
+  base = new Sprite(baseX, baseY);                          //Correlates to First sprite and keyboard movement
   base.collider = 'kinematic'                           //Removes rotation of spite after collision
 
-  minion1 = createSprite(440, 550, radius);             //Creates mionion
+  minion1 = createSprite(baseX + 100, 550, radius);             //Creates mionion
   minion1.collider = 'kinematic'
-  minion2 = createSprite(560, 550, radius);             //Creates mionion
+  minion2 = createSprite(baseX - 100, 550, radius);             //Creates mionion
   minion2.collider = 'kinematic'
-  minion3 = createSprite(500, 490, radius);             //Creates mionion
+  minion3 = createSprite(500, baseY - 100, radius);             //Creates mionion
   minion3.collider = 'kinematic'
 
   base.visible = false;
@@ -122,7 +125,7 @@ function setup() {
   creditButton.mouseClicked(drawCredits)
 
   backButton = createButton('Back')
-  backButton.position(505, 450)
+  backButton.position(900, 550)
   backButton.mouseClicked(drawMenuScreen)
 }
 
@@ -167,7 +170,6 @@ function draw() {
   background('black');
   resourceStatusBar();                                    //Runs Custom Function
   resourceCollectionMechanics();                          //Runs Custom Function
-  p1Movement();                                           //Runs Custom Keyboard Movement Function
   buyUpgrades();                                          //Runs Custom Function
   buyStation();
 
@@ -308,20 +310,6 @@ function buyStation() {
   if ((mouseX >= 854 && mouseX <= 869 && mouseY >= 84 && mouseY <= 100) && mouse.presses()) {                   //Closes Buy Station
     buyStationOpen = false;
   }
-}
-
-function p1Movement() {
-  if (kb.pressing('arrowUp')) {                           //Vertical Movement
-    base.vel.y = -10;
-  } else if (kb.pressing('arrowDown')) {
-    base.vel.y = +10
-  } else base.vel.y = 0
-
-  if (kb.pressing('arrowRight')) {                //Horizontal Movement
-    base.vel.x = +10;
-  } else if (kb.pressing('arrowLeft')) {
-    base.vel.x = -10
-  } else base.vel.x = 0
 }
 
 function minionMovement1() {                                                    //Moves minion to where the mouse is pressed

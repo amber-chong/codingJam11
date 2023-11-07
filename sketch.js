@@ -33,7 +33,10 @@ let wormSpawnTimer = 600;                                           //Used for R
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
+//base
 let base;
+let baseX = 500;
+let baseY = 550;
 
 //Minion 1                                                          
 let lineX;                                                          //Used to create line from minions
@@ -99,29 +102,32 @@ function setup() {
     GoldCoin8,                                            //Push Preloaded Images Into Array
     GoldCoin9);                                           //Push Preloaded Images Into Array
 
-  base = new Sprite(500, 550);                          //Correlates to First sprite and keyboard movement
+  base = new Sprite(baseX, baseY);                          //Correlates to First sprite and keyboard movement
   base.collider = 'kinematic'                           //Removes rotation of spite after collision
 
-  minion1 = createSprite(440, 550, radius);             //Creates mionion
+  minion1 = createSprite(baseX + 100, 550, radius);             //Creates mionion
   minion1.collider = 'kinematic'
-  minion2 = createSprite(560, 550, radius);             //Creates mionion
+  minion2 = createSprite(baseX - 100, 550, radius);             //Creates mionion
   minion2.collider = 'kinematic'
-  minion3 = createSprite(500, 490, radius);             //Creates mionion
+  minion3 = createSprite(500, baseY - 100, radius);             //Creates mionion
   minion3.collider = 'kinematic'
 
-  /*
-    startButton = createButton('Start');
-    startButton.position(350, 350)
-    startButton.mouseClicked(drawGame);
-  
-    creditButton = createButton('Credits')
-    creditButton.position(650, 350)
-    creditButton.mouseClicked(drawCredits)
-  
-    backButton = createButton('Back')
-    backButton.position(505, 450)
-    backButton.mouseClicked(drawMenuScreen)
-    */
+  base.visible = false;
+  minion1.visible = false;
+  minion2.visible = false;
+  minion3.visible = false;
+
+  startButton = createButton('Start');
+  startButton.position(350, 350)
+  startButton.mouseClicked(drawGame);
+
+  creditButton = createButton('Credits')
+  creditButton.position(650, 350)
+  creditButton.mouseClicked(drawCredits)
+
+  backButton = createButton('Back')
+  backButton.position(505, 450)
+  backButton.mouseClicked(drawMenuScreen)
 }
 
 function draw() {
@@ -155,7 +161,6 @@ function draw() {
   background('black');
   resourceStatusBar();                                    //Runs Custom Function
   resourceCollectionMechanics();                          //Runs Custom Function
-  p1Movement();                                           //Runs Custom Keyboard Movement Function
   buyUpgrades();                                          //Runs Custom Function
   buyStation();
 
@@ -277,31 +282,32 @@ function buyUpgrades() {
 
     //BuyStation Box 1
     for(let i=0; i<45; i+=15){                                                        //Loops and draws >>> for speed
-    triangle(width-135+i, 135, width-135+i, 165, width-115+i, 150)                    //Triangle
-    }
-    textSize(9);                                                                      //specs
-    noStroke();                                                                       //specs
-    fill('white')                                                                     //specs 
-    text('WORM SPEED', width-75-(75/2), 175);                                         //Text
-
-    if(wormCount >= speedCost){                                                       //Checks saved currency/resource against cost
-      textSize(13);
+      triangle(width-135+i, 135, width-135+i, 165, width-115+i, 150)                    //Triangle
+      }
+      textSize(9);                                                                      //specs
+      noStroke();                                                                       //specs
+      fill('white')                                                                     //specs 
+      text('WORM SPEED', width-75-(75/2), 175);                                         //Text
+  
+      if(wormCount >= speedCost){                                                       //Checks saved currency/resource against cost
+        textSize(13);
+          text(speedCost + ' Worms', width-75-(75/2), 190);
+      } else {
+        textSize(13)
+        fill('red')
         text(speedCost + ' Worms', width-75-(75/2), 190);
-    } else {
-      textSize(13)
-      fill('red')
-      text(speedCost + ' Worms', width-75-(75/2), 190);
-    }
+      }
+  
+      if(mouseX > width-150 && mouseX < width-75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost){   //Checks all conditions for purchase
+        minion1.speed = minion1.speed + 2;        
+        minion2.speed = minion2.speed + 2;
+        minion3.speed = minion3.speed + 2;
+        speedCost = speedCost + 10;                       //Increments cost after pruchase
+        wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
+      }
+      
 
-    if(mouseX > width-150 && mouseX < width-75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost){   //Checks all conditions for purchase
-      minion1.speed = minion1.speed + 2;        
-      minion2.speed = minion2.speed + 2;
-      minion3.speed = minion3.speed + 2;
-      speedCost = speedCost + 10;                       //Increments cost after pruchase
-      wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
-    }
-    
-    
+    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
@@ -322,20 +328,6 @@ function buyStation() {
   if ((mouseX >= 854 && mouseX <= 869 && mouseY >= 84 && mouseY <= 100) && mouse.presses()) {                   //Closes Buy Station
     buyStationOpen = false;
   }
-}
-
-function p1Movement() {
-  if (kb.pressing('arrowUp')) {                           //Vertical Movement
-    base.vel.y = -10;
-  } else if (kb.pressing('arrowDown')) {
-    base.vel.y = +10
-  } else base.vel.y = 0
-
-  if (kb.pressing('arrowRight')) {                //Horizontal Movement
-    base.vel.x = +10;
-  } else if (kb.pressing('arrowLeft')) {
-    base.vel.x = -10
-  } else base.vel.x = 0
 }
 
 function minionMovement1() {                                                    //Moves minion to where the mouse is pressed

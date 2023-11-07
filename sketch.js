@@ -368,7 +368,7 @@ function buyStation() {
 
 function minionMovement1() {                                                    //Moves minion to where the mouse is pressed
   if (mouse.presses() && moving1 == true) {
-    minion1.moveTo(mouseX, mouseY);
+    minion1.moveTo(mouseX, mouseY, minionSpeed);
     minion1Click = false;
     moving1 = false;
   }
@@ -395,7 +395,7 @@ function createLine1() {                                                      //
 
 function minionMovement2() {                                                 //Moves minion to where the mouse is pressed
   if (mouse.presses() && moving2 == true) {
-    minion2.moveTo(mouseX, mouseY);
+    minion2.moveTo(mouseX, mouseY, minionSpeed);
     minion2Click = false;
     moving2 = false;
   }
@@ -422,7 +422,7 @@ function createLine2() {                                                 //creat
 
 function minionMovement3() {                                             //Moves minion to where the mouse is pressed
   if (mouse.presses() && moving3 == true) {
-    minion3.moveTo(mouseX, mouseY);
+    minion3.moveTo(mouseX, mouseY, minionSpeed);
     minion3Click = false;
     moving3 = false;
   }

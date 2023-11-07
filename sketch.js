@@ -27,7 +27,7 @@ let goldOre;
 
 let buyStationOpen = false;                                         //Buy Station Open/Closed logic
 let BSXImg;                                                         //image for closing buy station
-let speedCost = 1;
+let speedCost = 10;
 
 let wormSpawnTimer = 600;                                           //Used for Random Spawning of Resources
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources

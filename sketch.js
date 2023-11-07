@@ -33,8 +33,8 @@ let wormSpawnTimer = 600;                                           //Used for R
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
-//base
-let base;
+//base      
+let base;                                                           //base values
 let baseX = 500;
 let baseY = 550;
 
@@ -123,11 +123,11 @@ function setup() {
 
   //minions
   minion1 = createSprite(baseX + 100, 550, radius);             //Creates minion
-  minion1.collider = 'dynamic'
+  minion1.collider = 'kinematic'
   minion2 = createSprite(baseX - 100, 550, radius);             //Creates minion
-  minion2.collider = 'dynamic'
+  minion2.collider = 'kinematic'
   minion3 = createSprite(500, baseY - 100, radius);             //Creates minion
-  minion3.collider = 'dynamic'
+  minion3.collider = 'kinematic'
 
   //resources
   resource1 = createSprite(rx1, ry1, rr1);

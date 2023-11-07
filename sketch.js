@@ -35,6 +35,9 @@ let wormSpawnTimer = 600;                                           //Used for R
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
+let spawnMultiplier = 1;
+let spawnCost = 25;
+
 //base      
 let base;                                                           //base values
 let baseX;
@@ -268,13 +271,13 @@ function resourceStatusBar() {                          //Draws The Status Bar i
 function resourceCollectionMechanics() {
   if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 30 secconds
     goldOreArray.push(goldGeneration());                //Runs Custom Function and stores in array to check for collisions
-    goldSpawnTimer = 1800;
-    goldSpawnTimerExec = floor(random(0, 1800));        //Use of floor() to round to nearest whole int
+    goldSpawnTimer = 1800*spawnMultiplier;
+    goldSpawnTimerExec = floor(random(0, 1800*spawnMultiplier));        //Use of floor() to round to nearest whole int
   }
   if (wormSpawnTimerExec == wormSpawnTimer) {           //Allows For random spawn time within 10 secconds
     wormArray.push(wormGeneration());                   //Runs Custom Function and stores in array to check for collisions
-    wormSpawnTimer = 600;
-    wormSpawnTimerExec = floor(random(0, 600));         //Use of floor() to round to nearest whole int
+    wormSpawnTimer = 600*spawnMultiplier;
+    wormSpawnTimerExec = floor(random(0, 600*spawnMultiplier));         //Use of floor() to round to nearest whole int
   }
 
   for (let i = 0; i < goldOreArray.length; i++) {                                                                                    //Loops through GoldOreArray
@@ -381,9 +384,36 @@ function buyUpgrades() {
       }
   
       if(mouseX > width-150 && mouseX < width-75 && mouseY > 205 && mouseY < 285 && mouse.presses() && wormCount >= magnetCost){   //Checks all conditions for purchase
-        hitboxSize = hitboxSize*1.75                       //Increases Minion hitbox
+        hitboxSize = hitboxSize*1.6                        //Increases Minion hitbox
         wormCount = wormCount - magnetCost;                //Decrements resource savings after purchase
         magnetCost = magnetCost + 15;                      //Increments cost after pruchase
+      }
+
+      //Buystation Box 3
+      stroke('white');
+      fill('green');
+      rectMode(CENTER, CENTER);
+      rect(width-75-(75/2), 310, 10, 35);
+      rect(width-75-(75/2), 310, 35, 10);
+
+      fill('white');
+      noStroke();
+      textSize(10);
+      text('SPAWN RATE', width-75-(75/2), 338)
+      
+      if(wormCount >= spawnCost){                                                       //Checks saved currency/resource against cost
+        textSize(13);
+          text(spawnCostCost + ' Worms', width-75-(75/2), 355);
+      } else {
+        textSize(13)
+        fill('red')
+        text(spawnCost + ' Worms', width-75-(75/2), 355);
+      }
+  
+      if(mouseX > width-150 && mouseX < width-75 && mouseY > 285 && mouseY < 365 && mouse.presses() && wormCount >= spawnCost){   //Checks all conditions for purchase
+        spawnMultiplier = spawnMultiplier -0.2                        //Increases Minion hitbox
+        wormCount = wormCount - spawnCost;                //Decrements resource savings after purchase
+        spawnCost = spawnCost + 25;                      //Increments cost after pruchase
       }
 
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE

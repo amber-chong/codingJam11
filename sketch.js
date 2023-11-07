@@ -44,6 +44,7 @@ let lineY;                                                          //Used to cr
 let minion1;                                                        //Used to create minion
 let distance1;                                                      //Used to find distance inside minion
 let radius = 30;                                                    //Used to create line from minions
+let minionSpeed = 1;                                                //Used in purchasing upgrades
 let minion1Click = false;                                           //So minion can only move when selected
 let moving1 = false;                                                //So minion can only move when selected
 
@@ -111,6 +112,7 @@ function setup() {
   minion2.collider = 'kinematic'
   minion3 = createSprite(500, baseY - 100, radius);             //Creates mionion
   minion3.collider = 'kinematic'
+  
 
   base.visible = false;
   minion1.visible = false;
@@ -306,9 +308,7 @@ function buyUpgrades() {
       }
   
       if(mouseX > width-150 && mouseX < width-75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost){   //Checks all conditions for purchase
-        minion1.speed = minion1.speed + 2;        
-        minion2.speed = minion2.speed + 2;
-        minion3.speed = minion3.speed + 2;
+        minionSpeed = minionSpeed + 1;
         speedCost = speedCost + 10;                       //Increments cost after pruchase
         wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
       }

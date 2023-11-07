@@ -150,47 +150,44 @@ function setup() {
   creditButton.mouseClicked(drawCredits)
 
   backButton = createButton('Back')
-  backButton.position(900, 550)
+  backButton.position(505, 450)
   backButton.mouseClicked(drawMenuScreen)
 }
 
 function draw() {
-  goldSpawnTimer--;                                       //Decrements Timer
-  wormSpawnTimer--;                                       //Decrements Timer
-
   //camera.x = base.x;
   //camera.y = base.y;
-  /*
-      switch (currentScreen) {
-        case LOADING:
-          drawLoadingScreen();
-          break;
-        case MAIN_MENU:
-          drawMenuScreen();
-          break;
-        case GAME:
-          drawGame();
-          break;
-        case CREDITS:
-          drawCredits();
-          break;
-      }*/
+/*
+    switch (currentScreen) {
+      case LOADING:
+        drawLoadingScreen();
+        break;
+      case MAIN_MENU:
+        drawMenuScreen();
+        break;
+      case GAME:
+        drawGame();
+        break;
+      case CREDITS:
+        drawCredits();
+        break;
+    }*/
 
-  if (currentScreen == LOADING) {
-    drawLoadingScreen();
-  }
-  else if (currentScreen == MAIN_MENU) {
-    drawMenuScreen();
-  }
-  else if (currentScreen == GAME) {
-    drawGame();
-  }
-  else if (currentScreen == CREDITS) {
-    drawCredits();
-  }
-  if (frameCount == 60 && currentScreen == LOADING) {
-    currentScreen = MAIN_MENU;
-  }
+    if (currentScreen == LOADING) {
+      drawLoadingScreen();
+    }
+    else if (currentScreen == MAIN_MENU) {
+      drawMenuScreen();
+    }
+    else if (currentScreen == GAME) {
+      drawGame();
+    }
+    else if (currentScreen == CREDITS) {
+      drawCredits();
+    }
+    if (frameCount == 60){
+      currentScreen = MAIN_MENU;
+    }
 
   background('black');
   resourceStatusBar();                                    //Runs Custom Function
@@ -579,7 +576,6 @@ function drawMenuScreen() {
   minion1.visible = false;
   minion2.visible = false;
   minion3.visible = false;
-  resource1.visible = false;
 }
 
 function drawLoadingScreen() {
@@ -604,7 +600,7 @@ function drawGame() {
 
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
-
+  
 }
 
 function drawCredits() {

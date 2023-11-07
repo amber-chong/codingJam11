@@ -27,6 +27,7 @@ let goldOre;
 
 let buyStationOpen = false;                                         //Buy Station Open/Closed logic
 let BSXImg;                                                         //image for closing buy station
+let speedCost = 1;
 
 let wormSpawnTimer = 600;                                           //Used for Random Spawning of Resources
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
@@ -63,7 +64,7 @@ let moving3 = false;                                                //So minion 
 let LOADING = 0;
 let MAIN_MENU = 1;
 let GAME = 2;
-let CREDITS = 3;
+let CREDITS = 5;
 
 let currentScreen = LOADING;
 
@@ -108,22 +109,19 @@ function setup() {
   minion3 = createSprite(500, 490, radius);             //Creates mionion
   minion3.collider = 'kinematic'
 
-  base.visible = false;
-  minion1.visible = false;
-  minion2.visible = false;
-  minion3.visible = false;
-
-  startButton = createButton('Start');
-  startButton.position(350, 350)
-  startButton.mouseClicked(drawGame);
-
-  creditButton = createButton('Credits')
-  creditButton.position(650, 350)
-  creditButton.mouseClicked(drawCredits)
-
-  backButton = createButton('Back')
-  backButton.position(505, 450)
-  backButton.mouseClicked(drawMenuScreen)
+  /*
+    startButton = createButton('Start');
+    startButton.position(350, 350)
+    startButton.mouseClicked(drawGame);
+  
+    creditButton = createButton('Credits')
+    creditButton.position(650, 350)
+    creditButton.mouseClicked(drawCredits)
+  
+    backButton = createButton('Back')
+    backButton.position(505, 450)
+    backButton.mouseClicked(drawMenuScreen)
+    */
 }
 
 function draw() {
@@ -132,6 +130,7 @@ function draw() {
 
   //camera.x = base.x;
   //camera.y = base.y;
+
   /*
       switch (currentScreen) {
         case LOADING:
@@ -146,23 +145,12 @@ function draw() {
         case CREDITS:
           drawCredits();
           break;
-      }*/
+      }
+      if (frameCount == 60){
+        currentScreen = MAIN_MENU;
+    }
+    */
 
-  if (currentScreen == LOADING) {
-    drawLoadingScreen();
-  }
-  else if (currentScreen == MAIN_MENU) {
-    drawMenuScreen();
-  }
-  else if (currentScreen == GAME) {
-    drawGame();
-  }
-  else if (currentScreen == CREDITS) {
-    drawCredits();
-  }
-  if (frameCount == 60 && currentScreen == LOADING) {
-    currentScreen = MAIN_MENU;
-  }
 
   background('black');
   resourceStatusBar();                                    //Runs Custom Function
@@ -287,7 +275,33 @@ function buyUpgrades() {
     image(BSXImg, width - 150, height / 2 - 220, 30, 30);                             //Close BuyStation Image
     text('UPGRADES', width - 65, height / 2 - 202);
 
-    //WRITE CODE FOR PURCHASES AND UPGRADES HERE
+    //BuyStation Box 1
+    for(let i=0; i<45; i+=15){                                                        //Loops and draws >>> for speed
+    triangle(width-135+i, 135, width-135+i, 165, width-115+i, 150)                    //Triangle
+    }
+    textSize(9);                                                                      //specs
+    noStroke();                                                                       //specs
+    fill('white')                                                                     //specs 
+    text('WORM SPEED', width-75-(75/2), 175);                                         //Text
+
+    if(wormCount >= speedCost){                                                       //Checks saved currency/resource against cost
+      textSize(13);
+        text(speedCost + ' Worms', width-75-(75/2), 190);
+    } else {
+      textSize(13)
+      fill('red')
+      text(speedCost + ' Worms', width-75-(75/2), 190);
+    }
+
+    if(mouseX > width-150 && mouseX < width-75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost){   //Checks all conditions for purchase
+      minion1.speed = minion1.speed + 2;        
+      minion2.speed = minion2.speed + 2;
+      minion3.speed = minion3.speed + 2;
+      speedCost = speedCost + 10;                       //Increments cost after pruchase
+      wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
+    }
+    
+    
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
@@ -406,6 +420,7 @@ function createLine3() {                                                 //creat
 }
 
 //===SCREEN CODE===
+/*
 function drawMenuScreen() {
   print('whoa main menu')
   currentScreen = MAIN_MENU
@@ -413,11 +428,6 @@ function drawMenuScreen() {
   startButton.show();
   creditButton.show();
   backButton.hide();
-
-  base.visible = false;
-  minion1.visible = false;
-  minion2.visible = false;
-  minion3.visible = false;
 }
 
 function drawLoadingScreen() {
@@ -433,15 +443,6 @@ function drawGame() {
   startButton.hide();
   creditButton.hide();
   backButton.show();
-
-  base.visible = true;
-  minion1.visible = true;
-  minion2.visible = true;
-  minion3.visible = true;
-
-  goldSpawnTimer--;                                       //Decrements Timer
-  wormSpawnTimer--;                                       //Decrements Timer
-
 }
 
 function drawCredits() {
@@ -450,11 +451,8 @@ function drawCredits() {
   startButton.hide();
   creditButton.hide();
   backButton.show();
-  base.visible = false;
-  minion1.visible = false;
-  minion2.visible = false;
-  minion3.visible = false;
 }
+*/
 //Credit
 //Art Sourced From OpenGameArt.Org
 //GoldCoin - morgan3d

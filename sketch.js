@@ -684,6 +684,7 @@ function reduce(){
           if(totalResource1 <= 0){ //if resource amount is 0
               totalResource1 = 0;
               extraResource1 = carryNumber1;
+              resource1.remove();
           }
   }
 
@@ -695,6 +696,7 @@ function reduce(){
     if(totalResource2 <= 0){ //if resource amount is 0
         totalResource2 = 0;
         extraResource2 = carryNumber1;
+        resource2.remove();
     }
 }
 
@@ -706,6 +708,7 @@ if(minion1.overlapping(resource3) && carryNumber1 < capacity){ //if minion1 is o
   if(totalResource3 <= 0){ //if resource amount is 0
       totalResource3 = 0;
       extraResource3 = carryNumber1;
+      resource3.remove();
   }
 }
 
@@ -718,6 +721,7 @@ if(minion1.overlapping(resource3) && carryNumber1 < capacity){ //if minion1 is o
     if(totalResource1 <= 0){ //if resource amount is 0
         totalResource1 = 0;
         extraResource1 = carryNumber2;
+        resource1.remove();
     }
   }
 
@@ -729,6 +733,7 @@ if(minion1.overlapping(resource3) && carryNumber1 < capacity){ //if minion1 is o
     if(totalResource2 <= 0){ //if resource amount is 0
         totalResource2 = 0;
         extraResource2 = carryNumber2;
+        resource2.remove();
     }
   }
 
@@ -740,6 +745,7 @@ if(minion1.overlapping(resource3) && carryNumber1 < capacity){ //if minion1 is o
     if(totalResource3 <= 0){ //if resource amount is 0
         totalResource3 = 0;
         extraResource3 = carryNumber2;
+        resource3.remove();
     }
   }
 
@@ -752,6 +758,7 @@ if(minion1.overlapping(resource3) && carryNumber1 < capacity){ //if minion1 is o
     if(totalResource1 <= 0){ //if resource amount is 0
         totalResource1 = 0;
         extraResource1 = carryNumber3;
+        resource1.remove();
     }
   }
 
@@ -763,6 +770,7 @@ if(minion1.overlapping(resource3) && carryNumber1 < capacity){ //if minion1 is o
     if(totalResource2 <= 0){ //if resource amount is 0
         totalResource2 = 0;
         extraResource2 = carryNumber3;
+        resource2.remove();
     }
   }
 
@@ -774,6 +782,7 @@ if(minion1.overlapping(resource3) && carryNumber1 < capacity){ //if minion1 is o
     if(totalResource3 <= 0){ //if resource amount is 0
         totalResource3 = 0;
         extraResource3 = carryNumber3;
+        resource3.remove();
     }
   }
 }

@@ -240,6 +240,7 @@ function draw() {
     }
 
   background('black');
+  canvasBoundary();
   resourceStatusBar();                                    //Runs Custom Function
   resourceCollectionMechanics();                          //Runs Custom Function
   buyUpgrades();                                          //Runs Custom Function
@@ -261,6 +262,35 @@ function draw() {
   dropoff();                                              //adds to storage
   reduce();                                               //reduce total resource avaliablie
   //write();      //shows stats for storage, carried and resource no.
+}
+
+function drawHealthBar(x, y) {
+  // background
+  fill(255, 0, 0);
+  rectMode(CENTER);
+  rect(x, y, barWidth, barHeight);
+
+  // decreasing animation
+  fill(0, 255, 0);
+  let decreasingWidth = map(health, 0, 100, 0, barWidth);
+  rect(x - (barWidth - decreasingWidth) / 2, y, decreasingWidth, barHeight);
+}
+
+function healthDecrease () {
+    // calculates decrease amount
+    let decreaseAmount = deltaTime * frameRate() * decreaseRate;
+
+    // decreases
+    health = max(0, health - decreaseAmount);
+}
+
+function canvasBoundary() {
+  minion1.x = constrain(minion1.x, 15, 985);  //prevents them from going offscreen (number to constrian, min, max)
+  minion1.y = constrain(minion1.y, 15, 585);
+  minion2.x = constrain(minion2.x, 15, 985);
+  minion2.y = constrain(minion2.y, 15, 585);
+  minion3.x = constrain(minion3.x, 15, 985);  
+  minion3.y = constrain(minion3.y, 15, 585);
 }
 
 function resourceStatusBar() {                          //Draws The Status Bar in the top left corner
@@ -306,7 +336,11 @@ function resourceCollectionMechanics() {
 
   for (let i = 0; i < goldOreArray.length; i++) {                                                                                    //Loops through GoldOreArray
     if (goldOreArray[i].collides(minion1) || goldOreArray[i].collides(minion2) || goldOreArray[i].collides(minion3)) {               //Checks for collision between each instance of array and player
-      goldOreArray[i].remove();                                                                                                      //Removes Sprite after collision
+      drawHealthBar(goldOreArray[i].position.x, goldOreArray[i].position.y - 30);
+      healthDecrease();
+    }
+    if (health === 0) {
+      goldOreArray[i].remove();
       goldCount++;
     }
   }

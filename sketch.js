@@ -107,6 +107,13 @@ let MAIN_MENU = 1;
 let GAME = 2;
 let CREDITS = 3;
 
+//health bar
+let health = 100;
+let mouseOverTime;
+let decreaseRate = 0.0005; // more 0s = slower, less 0s = faster
+let barWidth = 50;
+let barHeight = 7;
+
 let currentScreen = LOADING;
 
 function preload() {
@@ -338,8 +345,6 @@ function resourceCollectionMechanics() {
     if (goldOreArray[i].collides(minion1) || goldOreArray[i].collides(minion2) || goldOreArray[i].collides(minion3)) {               //Checks for collision between each instance of array and player
       drawHealthBar(goldOreArray[i].position.x, goldOreArray[i].position.y - 30);
       healthDecrease();
-    }
-    if (health === 0) {
       goldOreArray[i].remove();
       goldCount += 10;
     }

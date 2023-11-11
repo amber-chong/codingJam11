@@ -28,15 +28,15 @@ let goldOre;
 let buyStationOpen = false;                                         //Buy Station Open/Closed logic
 let BSXImg;                                                         //image for closing buy station
 let magnetImg;
-let speedCost = 10;
-let magnetCost = 15;
+let speedCost = 20;
+let magnetCost = 40;
 
 let wormSpawnTimer = 600;                                           //Used for Random Spawning of Resources
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
 let spawnMultiplier;
-let spawnCost = 25;
+let spawnCost = 60;
 
 //base      
 let base;                                                           //base values
@@ -422,7 +422,7 @@ function buyUpgrades() {
     if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost) {   //Checks all conditions for purchase
       minionSpeed = minionSpeed + 1;                    //Increases Minion movement speed
       wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
-      speedCost = speedCost + 10;                       //Increments cost after pruchase
+      speedCost = speedCost*2;                       //Increments cost after pruchase
     }
 
     //Buystation Box 2
@@ -444,7 +444,7 @@ function buyUpgrades() {
     if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 205 && mouseY < 285 && mouse.presses() && wormCount >= magnetCost) {   //Checks all conditions for purchase
       hitboxSize = hitboxSize * 1.6                        //Increases Minion hitbox
       wormCount = wormCount - magnetCost;                //Decrements resource savings after purchase
-      magnetCost = magnetCost + 15;                      //Increments cost after pruchase
+      magnetCost = magnetCost*2;                      //Increments cost after pruchase
     }
 
     //Buystation Box 3
@@ -478,7 +478,7 @@ function buyUpgrades() {
     } else if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 285 && mouseY < 365 && mouse.presses() && wormCount >= spawnCost) {   //Checks all conditions for purchase
       spawnMultiplier = spawnMultiplier - 0.2                        //Increases Minion hitbox
       wormCount = wormCount - spawnCost;                             //Decrements resource savings after purchase
-      spawnCost = spawnCost + 25;                                    //Increments cost after pruchase
+      spawnCost = spawnCost*2;                                    //Increments cost after pruchase
     }
 
 

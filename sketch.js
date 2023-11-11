@@ -107,6 +107,8 @@ let MAIN_MENU = 1;
 let GAME = 2;
 let CREDITS = 3;
 
+let currentScreen = LOADING;
+
 //health bar
 let health = 100;
 let mouseOverTime;
@@ -114,7 +116,12 @@ let decreaseRate = 0.0005; // more 0s = slower, less 0s = faster
 let barWidth = 50;
 let barHeight = 7;
 
-let currentScreen = LOADING;
+let logoImg;
+let bgImg;
+let playScaled;
+let creditScaled;
+let creditImg;
+let backImg;
 
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
@@ -130,6 +137,15 @@ function preload() {
   goldOreImg = loadImage('Assets/Images/gold_ore.png');             //Preloads Images
   BSXImg = loadImage('Assets/Images/Wii_Minus.png')
   magnetImg = loadImage('Assets/Images/Magnet.png')
+
+  logoImg = loadImage('Assets/Images/blankLogo.png')
+  playScaled = loadImage('Assets/Images/play_scaled.png')
+  creditScaled = loadImage('Assets/Images/credits_scaled.png')
+  bgImg = loadImage('Assets/Images/background.png')
+  creditImg = loadImage('Assets/Images/creditLogo.png')
+  backImg = loadImage('Assets/Images/back.png')
+
+  moleImg = loadImage('Assets/Images/mole.png')
 }
 
 function setup() {
@@ -160,16 +176,19 @@ function setup() {
   minion1.collider = 'kinematic'
   minion1.w = hitboxSize
   minion1.h = hitboxSize
+  minion1.image = moleImg
 
   minion2 = createSprite(baseX - 100, 550, radius);             //Creates minion
   minion2.collider = 'kinematic'
   minion2.w = hitboxSize
   minion2.h = hitboxSize
+  minion2.image = moleImg
 
   minion3 = createSprite(500, baseY - 100, radius);             //Creates minion
   minion3.collider = 'kinematic'
   minion3.w = hitboxSize
   minion3.h = hitboxSize
+  minion3.image = moleImg
 
   //resources
   resource1 = createSprite(rx1, ry1, rr1);
@@ -191,20 +210,21 @@ function setup() {
   resource3.visible = false;
 
   //buttons
-  startButton = createButton('Start');
-  startButton.position(350, 350)
+  startButton = createImg('Assets/Images/play_scaled.png');
+  startButton.position(300, 350)
   startButton.mouseClicked(drawGame);
 
-  creditButton = createButton('Credits')
-  creditButton.position(650, 350)
+  creditButton = createImg('Assets/Images/credits_scaled.png');
+  creditButton.position(550, 350)
   creditButton.mouseClicked(drawCredits)
 
-  backButton = createButton('Back')
-  backButton.position(900, 450)
-  backButton.mouseClicked(drawMenuScreen)
+  backButton = createImg('Assets/Images/back.png')
+  backButton.position(450, 120)
+  backButton.mouseClicked(gameReset)
 }
 
 function draw() {
+  background('black');
   //camera.x = base.x;
   //camera.y = base.y;
 
@@ -214,39 +234,7 @@ function draw() {
   minion2.h = hitboxSize        //Allows for magnet powerup
   minion3.w = hitboxSize        //Allows for magnet powerup
   minion3.h = hitboxSize        //Allows for magnet powerup
-  /*
-      switch (currentScreen) {
-        case LOADING:
-          drawLoadingScreen();
-          break;
-        case MAIN_MENU:
-          drawMenuScreen();
-          break;
-        case GAME:
-          drawGame();
-          break;
-        case CREDITS:
-          drawCredits();
-          break;
-      }*/
 
-  if (currentScreen == LOADING) {
-    drawLoadingScreen();
-  }
-  else if (currentScreen == MAIN_MENU) {
-    drawMenuScreen();
-  }
-  else if (currentScreen == GAME) {
-    drawGame();
-  }
-  else if (currentScreen == CREDITS) {
-    drawCredits();
-  }
-  if (frameCount == 60) {
-    currentScreen = MAIN_MENU;
-  }
-
-  background('black');
   canvasBoundary();
   resourceStatusBar();                                    //Runs Custom Function
   resourceCollectionMechanics();                          //Runs Custom Function
@@ -269,6 +257,40 @@ function draw() {
   dropoff();                                              //adds to storage
   reduce();                                               //reduce total resource avaliablie
   //write();      //shows stats for storage, carried and resource no.
+
+  /*
+        if (currentScreen == LOADING) {
+    drawLoadingScreen();
+  }
+  else if (currentScreen == MAIN_MENU) {
+    drawMenuScreen();
+  }
+  else if (currentScreen == GAME) {
+    drawGame();
+  }
+  else if (currentScreen == CREDITS) {
+    drawCredits();
+  }
+      */
+
+  switch (currentScreen) {
+    case LOADING:
+      drawLoadingScreen();
+      break;
+    case MAIN_MENU:
+      drawMenuScreen();
+      break;
+    case GAME:
+      drawGame();
+      break;
+    case CREDITS:
+      drawCredits();
+      break;
+  }
+
+  if (frameCount == 60) {
+    currentScreen = MAIN_MENU;
+  }
 }
 
 function drawHealthBar(x, y) {
@@ -427,7 +449,7 @@ function buyUpgrades() {
     if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost) {   //Checks all conditions for purchase
       minionSpeed = minionSpeed + 1;                    //Increases Minion movement speed
       wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
-      speedCost = speedCost*2;                       //Increments cost after pruchase
+      speedCost = speedCost * 2;                       //Increments cost after pruchase
     }
 
     //Buystation Box 2
@@ -449,7 +471,7 @@ function buyUpgrades() {
     if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 205 && mouseY < 285 && mouse.presses() && wormCount >= magnetCost) {   //Checks all conditions for purchase
       hitboxSize = hitboxSize * 1.6                        //Increases Minion hitbox
       wormCount = wormCount - magnetCost;                //Decrements resource savings after purchase
-      magnetCost = magnetCost*2;                      //Increments cost after pruchase
+      magnetCost = magnetCost * 2;                      //Increments cost after pruchase
     }
 
     //Buystation Box 3
@@ -483,7 +505,7 @@ function buyUpgrades() {
     } else if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 285 && mouseY < 365 && mouse.presses() && wormCount >= spawnCost) {   //Checks all conditions for purchase
       spawnMultiplier = spawnMultiplier - 0.2                        //Increases Minion hitbox
       wormCount = wormCount - spawnCost;                             //Decrements resource savings after purchase
-      spawnCost = spawnCost*2;                                    //Increments cost after pruchase
+      spawnCost = spawnCost * 2;                                    //Increments cost after pruchase
     }
 
 
@@ -864,7 +886,7 @@ function write() {
 
 //===SCREEN CODE===
 function drawMenuScreen() {
-  print('whoa main menu')
+  //print('whoa main menu')
   currentScreen = MAIN_MENU
 
   startButton.show();
@@ -878,6 +900,15 @@ function drawMenuScreen() {
   resource1.visible = false;
   resource2.visible = false;
   resource3.visible = false;
+
+  image(bgImg, 0, 0)
+  image(logoImg, 317, 36)
+  logoImg.resize(366.6, 229.1)
+
+  noStroke()
+  fill('#0b170e')
+  textSize(14)
+  text('© Group 11', 450, 575)
 }
 
 function drawLoadingScreen() {
@@ -904,7 +935,10 @@ function drawGame() {
 
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
-
+  noStroke()
+  fill('#0b170e')
+  textSize(14)
+  text('© Group 11', 450, 575)
 }
 
 function drawCredits() {
@@ -920,8 +954,35 @@ function drawCredits() {
   resource1.visible = false;
   resource2.visible = false;
   resource3.visible = false;
+
+  image(bgImg, 0, 0)
+  image(creditImg, 283, -12)
+  creditImg.resize(433, 160)
+
+  noStroke()
+  fill('white')
+  textSize(25)
+  text('Code', 465, 175)
+  textSize(18)
+  text('Lily, Jack, Amber', 430, 205)
+  textSize(25)
+  text('Art', 480, 250)
+  textSize(18)
+  text('GoldCoin - morgan3d, OpenGameArt.Org', 330, 280)
+  text('Worm - Russpuppy, OpenGameArt.Org', 345, 310)
+  text('Sprites/Text - Amber', 420, 340)
+  fill('#0b170e')
+  textSize(14)
+  text('© Group 11', 450, 575)
 }
-//Credit
-//Art Sourced From OpenGameArt.Org
-//GoldCoin - morgan3d
-//Worm - Russpuppy
+
+
+//attempted reset code
+function gameReset() {
+  if (currentScreen == MAIN_MENU || currentScreen == CREDITS) {
+    currentScreen = MAIN_MENU;
+  }
+  else if (currentScreen == GAME) {
+    currentScreen = MAIN_MENU;
+  }
+}

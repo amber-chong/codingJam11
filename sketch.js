@@ -35,7 +35,7 @@ let wormSpawnTimer = 600;                                           //Used for R
 let wormSpawnTimerExec;                                             //Used for Random Spawning of Resources
 let worm;
 
-let spawnMultiplier; 
+let spawnMultiplier;
 let spawnCost = 25;
 
 //base      
@@ -78,7 +78,7 @@ let capacity = 30;                                                  //the max nu
 let storage = 0;                                                    //the base storage
 
 //resource small
-let resource1;                                
+let resource1;
 let rx1 = 400;                                                      //resource1's values
 let ry1 = 300;
 let rr1 = 20;
@@ -128,8 +128,8 @@ function preload() {
 function setup() {
   createCanvas(1000, 600);
   spawnMultiplier = floor(1);
-  baseX = width/2;
-  baseY = height/2;
+  baseX = width / 2;
+  baseY = height / 2;
   goldSpawnTimerExec = floor(random(0, 900));             //Initialises First Rand Num For Resource Spawning -- Use of floor() to round to nearest whole int                      
   wormSpawnTimerExec = floor(random(0, 600));             //Initialises First Rand Num For Resource Spawning -- Use of floor() to round to nearest whole int                      
 
@@ -145,20 +145,20 @@ function setup() {
     GoldCoin9);                                           //Push Preloaded Images Into Array
 
   //base  
-  base = new Sprite(baseX, baseY);                          
-  base.collider = 'kinematic'                           
+  base = new Sprite(baseX, baseY);
+  base.collider = 'kinematic'
 
   //minions
   minion1 = createSprite(baseX + 100, 550, radius);             //Creates minion
   minion1.collider = 'kinematic'
   minion1.w = hitboxSize
   minion1.h = hitboxSize
- 
+
   minion2 = createSprite(baseX - 100, 550, radius);             //Creates minion
   minion2.collider = 'kinematic'
   minion2.w = hitboxSize
   minion2.h = hitboxSize
- 
+
   minion3 = createSprite(500, baseY - 100, radius);             //Creates minion
   minion3.collider = 'kinematic'
   minion3.w = hitboxSize
@@ -200,44 +200,44 @@ function setup() {
 function draw() {
   //camera.x = base.x;
   //camera.y = base.y;
-  
+
   minion1.w = hitboxSize        //Allows for magnet powerup
   minion1.h = hitboxSize        //Allows for magnet powerup
   minion2.w = hitboxSize        //Allows for magnet powerup
   minion2.h = hitboxSize        //Allows for magnet powerup
   minion3.w = hitboxSize        //Allows for magnet powerup
   minion3.h = hitboxSize        //Allows for magnet powerup
-/*
-    switch (currentScreen) {
-      case LOADING:
-        drawLoadingScreen();
-        break;
-      case MAIN_MENU:
-        drawMenuScreen();
-        break;
-      case GAME:
-        drawGame();
-        break;
-      case CREDITS:
-        drawCredits();
-        break;
-    }*/
+  /*
+      switch (currentScreen) {
+        case LOADING:
+          drawLoadingScreen();
+          break;
+        case MAIN_MENU:
+          drawMenuScreen();
+          break;
+        case GAME:
+          drawGame();
+          break;
+        case CREDITS:
+          drawCredits();
+          break;
+      }*/
 
-    if (currentScreen == LOADING) {
-      drawLoadingScreen();
-    }
-    else if (currentScreen == MAIN_MENU) {
-      drawMenuScreen();
-    }
-    else if (currentScreen == GAME) {
-      drawGame();
-    }
-    else if (currentScreen == CREDITS) {
-      drawCredits();
-    }
-    if (frameCount == 60){
-      currentScreen = MAIN_MENU;
-    }
+  if (currentScreen == LOADING) {
+    drawLoadingScreen();
+  }
+  else if (currentScreen == MAIN_MENU) {
+    drawMenuScreen();
+  }
+  else if (currentScreen == GAME) {
+    drawGame();
+  }
+  else if (currentScreen == CREDITS) {
+    drawCredits();
+  }
+  if (frameCount == 60) {
+    currentScreen = MAIN_MENU;
+  }
 
   background('black');
   canvasBoundary();
@@ -276,12 +276,12 @@ function drawHealthBar(x, y) {
   rect(x - (barWidth - decreasingWidth) / 2, y, decreasingWidth, barHeight);
 }
 
-function healthDecrease () {
-    // calculates decrease amount
-    let decreaseAmount = deltaTime * frameRate() * decreaseRate;
+function healthDecrease() {
+  // calculates decrease amount
+  let decreaseAmount = deltaTime * frameRate() * decreaseRate;
 
-    // decreases
-    health = max(0, health - decreaseAmount);
+  // decreases
+  health = max(0, health - decreaseAmount);
 }
 
 function canvasBoundary() {
@@ -289,7 +289,7 @@ function canvasBoundary() {
   minion1.y = constrain(minion1.y, 15, 585);
   minion2.x = constrain(minion2.x, 15, 985);
   minion2.y = constrain(minion2.y, 15, 585);
-  minion3.x = constrain(minion3.x, 15, 985);  
+  minion3.x = constrain(minion3.x, 15, 985);
   minion3.y = constrain(minion3.y, 15, 585);
 }
 
@@ -325,13 +325,13 @@ function resourceStatusBar() {                          //Draws The Status Bar i
 function resourceCollectionMechanics() {
   if (goldSpawnTimerExec == goldSpawnTimer) {           //Allows For random spawn time within 30 secconds
     goldOreArray.push(goldGeneration());                //Runs Custom Function and stores in array to check for collisions
-    goldSpawnTimer = floor(1800*spawnMultiplier);
-    goldSpawnTimerExec = floor(random(0, 1800*spawnMultiplier));        //Use of floor() to round to nearest whole int
+    goldSpawnTimer = floor(1800 * spawnMultiplier);
+    goldSpawnTimerExec = floor(random(0, 1800 * spawnMultiplier));        //Use of floor() to round to nearest whole int
   }
   if (wormSpawnTimerExec == wormSpawnTimer) {           //Allows For random spawn time within 10 secconds
     wormArray.push(wormGeneration());                   //Runs Custom Function and stores in array to check for collisions
-    wormSpawnTimer = floor(600*spawnMultiplier);
-    wormSpawnTimerExec = floor(random(0, 600*spawnMultiplier));         //Use of floor() to round to nearest whole int
+    wormSpawnTimer = floor(600 * spawnMultiplier);
+    wormSpawnTimerExec = floor(random(0, 600 * spawnMultiplier));         //Use of floor() to round to nearest whole int
   }
 
   for (let i = 0; i < goldOreArray.length; i++) {                                                                                    //Loops through GoldOreArray
@@ -341,14 +341,14 @@ function resourceCollectionMechanics() {
     }
     if (health === 0) {
       goldOreArray[i].remove();
-      goldCount++;
+      goldCount += 10;
     }
   }
 
   for (let i = 0; i < wormArray.length; i++) {                                                                                       //Loops through WormArray
     if (wormArray[i].collides(minion1) || wormArray[i].collides(minion2) || wormArray[i].collides(minion3)) {                        //Checks for collision between each instance of array and player
       wormArray[i].remove();                                                                                                         //Removes Sprite after collision
-      wormCount++;                                                                                                                   //Adds to the currency in top left
+      wormCount += 5;                                                                                                                   //Adds to the currency in top left
     }
   }
 }
@@ -402,85 +402,85 @@ function buyUpgrades() {
     text('UPGRADES', width - 65, height / 2 - 202);
 
     //BuyStation Box 1
-    for(let i=0; i<45; i+=15){                                                        //Loops and draws >>> for speed
-      triangle(width-135+i, 135, width-135+i, 165, width-115+i, 150)                    //Triangle
-      }
-      textSize(9);                                                                      //specs
-      noStroke();                                                                       //specs
-      fill('white')                                                                     //specs 
-      text('WORM SPEED', width-75-(75/2), 175);                                         //Text
-  
-      if(wormCount >= speedCost){                                                       //Checks saved currency/resource against cost
-        textSize(13);
-          text(speedCost + ' Worms', width-75-(75/2), 190);
-      } else {
-        textSize(13)
-        fill('red')
-        text(speedCost + ' Worms', width-75-(75/2), 190);
-      }
-  
-      if(mouseX > width-150 && mouseX < width-75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost){   //Checks all conditions for purchase
-        minionSpeed = minionSpeed + 1;                    //Increases Minion movement speed
-        wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
-        speedCost = speedCost + 10;                       //Increments cost after pruchase
-      }
-      
-      //Buystation Box 2
-      imageMode(CENTER);
-      image(magnetImg, width-75-(75/2), 230, 40, 40);
-      fill('white');
-      textSize(10);
-      text('MAGNET', width-75-(75/2), 255)
-      
-      if(wormCount >= magnetCost){                                                       //Checks saved currency/resource against cost
-        textSize(13);
-          text(magnetCost + ' Worms', width-75-(75/2), 270);
-      } else {
-        textSize(13)
-        fill('red')
-        text(magnetCost + ' Worms', width-75-(75/2), 270);
-      }
-  
-      if(mouseX > width-150 && mouseX < width-75 && mouseY > 205 && mouseY < 285 && mouse.presses() && wormCount >= magnetCost){   //Checks all conditions for purchase
-        hitboxSize = hitboxSize*1.6                        //Increases Minion hitbox
-        wormCount = wormCount - magnetCost;                //Decrements resource savings after purchase
-        magnetCost = magnetCost + 15;                      //Increments cost after pruchase
-      }
+    for (let i = 0; i < 45; i += 15) {                                                        //Loops and draws >>> for speed
+      triangle(width - 135 + i, 135, width - 135 + i, 165, width - 115 + i, 150)                    //Triangle
+    }
+    textSize(9);                                                                      //specs
+    noStroke();                                                                       //specs
+    fill('white')                                                                     //specs 
+    text('WORM SPEED', width - 75 - (75 / 2), 175);                                         //Text
 
-      //Buystation Box 3
-      stroke('white');
-      fill('green');
-      rectMode(CENTER, CENTER);
-      rect(width-75-(75/2), 310, 10, 35);
-      rect(width-75-(75/2), 310, 35, 10);
+    if (wormCount >= speedCost) {                                                       //Checks saved currency/resource against cost
+      textSize(13);
+      text(speedCost + ' Worms', width - 75 - (75 / 2), 190);
+    } else {
+      textSize(13)
+      fill('red')
+      text(speedCost + ' Worms', width - 75 - (75 / 2), 190);
+    }
 
-      fill('white');
-      noStroke();
-      textSize(10);
-      text('SPAWN RATE', width-75-(75/2), 338)
-      
-      if(wormCount >= spawnCost){                                                       //Checks saved currency/resource against cost
-        textSize(13);
-          text(spawnCost + ' Worms', width-75-(75/2), 355);
-      } else {
-        textSize(13)
-        fill('red')
-        text(spawnCost + ' Worms', width-75-(75/2), 355);
-      }
-  
-      if(spawnMultiplier < 0.3) {
-        spawnMultiplier = 0.2;
-        rectMode(CORNER);
-        fill('black');
-        rect(width-150, 285, 75, 80);
-        fill('white')
-        text("MAX LVL", width-75-(75/2), 325);
-      }else if(mouseX > width-150 && mouseX < width-75 && mouseY > 285 && mouseY < 365 && mouse.presses() && wormCount >= spawnCost){   //Checks all conditions for purchase
-          spawnMultiplier = spawnMultiplier - 0.2                        //Increases Minion hitbox
-          wormCount = wormCount - spawnCost;                             //Decrements resource savings after purchase
-          spawnCost = spawnCost + 25;                                    //Increments cost after pruchase
-      }
-    
+    if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 125 && mouseY < 205 && mouse.presses() && wormCount >= speedCost) {   //Checks all conditions for purchase
+      minionSpeed = minionSpeed + 1;                    //Increases Minion movement speed
+      wormCount = wormCount - speedCost;                //Decrements resource savings after purchase
+      speedCost = speedCost + 10;                       //Increments cost after pruchase
+    }
+
+    //Buystation Box 2
+    imageMode(CENTER);
+    image(magnetImg, width - 75 - (75 / 2), 230, 40, 40);
+    fill('white');
+    textSize(10);
+    text('MAGNET', width - 75 - (75 / 2), 255)
+
+    if (wormCount >= magnetCost) {                                                       //Checks saved currency/resource against cost
+      textSize(13);
+      text(magnetCost + ' Worms', width - 75 - (75 / 2), 270);
+    } else {
+      textSize(13)
+      fill('red')
+      text(magnetCost + ' Worms', width - 75 - (75 / 2), 270);
+    }
+
+    if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 205 && mouseY < 285 && mouse.presses() && wormCount >= magnetCost) {   //Checks all conditions for purchase
+      hitboxSize = hitboxSize * 1.6                        //Increases Minion hitbox
+      wormCount = wormCount - magnetCost;                //Decrements resource savings after purchase
+      magnetCost = magnetCost + 15;                      //Increments cost after pruchase
+    }
+
+    //Buystation Box 3
+    stroke('white');
+    fill('green');
+    rectMode(CENTER, CENTER);
+    rect(width - 75 - (75 / 2), 310, 10, 35);
+    rect(width - 75 - (75 / 2), 310, 35, 10);
+
+    fill('white');
+    noStroke();
+    textSize(10);
+    text('SPAWN RATE', width - 75 - (75 / 2), 338)
+
+    if (wormCount >= spawnCost) {                                                       //Checks saved currency/resource against cost
+      textSize(13);
+      text(spawnCost + ' Worms', width - 75 - (75 / 2), 355);
+    } else {
+      textSize(13)
+      fill('red')
+      text(spawnCost + ' Worms', width - 75 - (75 / 2), 355);
+    }
+
+    if (spawnMultiplier < 0.3) {
+      spawnMultiplier = 0.2;
+      rectMode(CORNER);
+      fill('black');
+      rect(width - 150, 285, 75, 80);
+      fill('white')
+      text("MAX LVL", width - 75 - (75 / 2), 325);
+    } else if (mouseX > width - 150 && mouseX < width - 75 && mouseY > 285 && mouseY < 365 && mouse.presses() && wormCount >= spawnCost) {   //Checks all conditions for purchase
+      spawnMultiplier = spawnMultiplier - 0.2                        //Increases Minion hitbox
+      wormCount = wormCount - spawnCost;                             //Decrements resource savings after purchase
+      spawnCost = spawnCost + 25;                                    //Increments cost after pruchase
+    }
+
 
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
     //WRITE CODE FOR PURCHASES AND UPGRADES HERE
@@ -586,275 +586,275 @@ function createLine3() {                                                 //creat
   }
 }
 
-function collect(){
+function collect() {
   //minion1
   //small
-  if(minion1.overlapping(resource1)){                                 //checks if minions is at resource
-    carryNumber1 +=1;
+  if (minion1.overlapping(resource1)) {                                 //checks if minions is at resource
+    carryNumber1 += 1;
 
-      if(carryNumber1 >= capacity){                                   //checks that carrynumber is less than capacity
-        carryNumber1 = capacity;
-      }
+    if (carryNumber1 >= capacity) {                                   //checks that carrynumber is less than capacity
+      carryNumber1 = capacity;
+    }
 
-      if(totalResource1 <= 0){                                      //checks there is resource available
-        carryNumber1 = extraResource1;
-      }
+    if (totalResource1 <= 0) {                                      //checks there is resource available
+      carryNumber1 = extraResource1;
+    }
   }
 
   //medium
-  if(minion1.overlapping(resource2)){                                 //checks if minions is at resource
-    carryNumber1 +=1;
+  if (minion1.overlapping(resource2)) {                                 //checks if minions is at resource
+    carryNumber1 += 1;
 
-      if(carryNumber1 >= capacity){                                   //checks that carrynumber is less than capacity
-        carryNumber1 = capacity;
-      }
+    if (carryNumber1 >= capacity) {                                   //checks that carrynumber is less than capacity
+      carryNumber1 = capacity;
+    }
 
-      if(totalResource2 <= 0){                                      //checks there is resource available
-        carryNumber1 = extraResource2;
-      }
+    if (totalResource2 <= 0) {                                      //checks there is resource available
+      carryNumber1 = extraResource2;
+    }
   }
 
   //large
-  if(minion1.overlapping(resource3)){                                 //checks if minions is at resource
-    carryNumber1 +=1;
+  if (minion1.overlapping(resource3)) {                                 //checks if minions is at resource
+    carryNumber1 += 1;
 
-      if(carryNumber1 >= capacity){                                   //checks that carrynumber is less than capacity
-        carryNumber1 = capacity;
-      }
+    if (carryNumber1 >= capacity) {                                   //checks that carrynumber is less than capacity
+      carryNumber1 = capacity;
+    }
 
-      if(totalResource3 <= 0){                                      //checks there is resource available
-        carryNumber1 = extraResource3;
-      }
+    if (totalResource3 <= 0) {                                      //checks there is resource available
+      carryNumber1 = extraResource3;
+    }
   }
 
   //minion2
   //small
-  if(minion2.overlapping(resource1)){                               //checks if minions is at resource
-    carryNumber2 +=1;
+  if (minion2.overlapping(resource1)) {                               //checks if minions is at resource
+    carryNumber2 += 1;
 
-      if(carryNumber2 >= capacity){                                 //checks that carrynumber is less than capacity
-        carryNumber2 = capacity;
-      }
+    if (carryNumber2 >= capacity) {                                 //checks that carrynumber is less than capacity
+      carryNumber2 = capacity;
+    }
 
-      if(totalResource1 <= 0){                                      //checks there is resource available
-        carryNumber2 = extraResource1;
-      }
+    if (totalResource1 <= 0) {                                      //checks there is resource available
+      carryNumber2 = extraResource1;
+    }
   }
 
   //medium
-  if(minion2.overlapping(resource2)){                               //checks if minions is at resource
-    carryNumber2 +=1;
+  if (minion2.overlapping(resource2)) {                               //checks if minions is at resource
+    carryNumber2 += 1;
 
-      if(carryNumber2 >= capacity){                                 //checks that carrynumber is less than capacity
-        carryNumber2 = capacity;
-      }
+    if (carryNumber2 >= capacity) {                                 //checks that carrynumber is less than capacity
+      carryNumber2 = capacity;
+    }
 
-      if(totalResource2 <= 0){                                      //checks there is resource available
-        carryNumber2 = extraResource2;
-      }
+    if (totalResource2 <= 0) {                                      //checks there is resource available
+      carryNumber2 = extraResource2;
+    }
   }
 
   //large
-  if(minion2.overlapping(resource3)){                               //checks if minions is at resource
-    carryNumber2 +=1;
+  if (minion2.overlapping(resource3)) {                               //checks if minions is at resource
+    carryNumber2 += 1;
 
-      if(carryNumber2 >= capacity){                                 //checks that carrynumber is less than capacity
-        carryNumber2 = capacity;
-      }
+    if (carryNumber2 >= capacity) {                                 //checks that carrynumber is less than capacity
+      carryNumber2 = capacity;
+    }
 
-      if(totalResource3 <= 0){                                      //checks there is resource available
-        carryNumber2 = extraResource3;
-      }
+    if (totalResource3 <= 0) {                                      //checks there is resource available
+      carryNumber2 = extraResource3;
+    }
   }
 
   //minion3
   //large
-  if(minion3.overlapping(resource1)){                               //checks if minions is at resource
-    carryNumber3 +=1;
+  if (minion3.overlapping(resource1)) {                               //checks if minions is at resource
+    carryNumber3 += 1;
 
-      if(carryNumber3 >= capacity){                                 //checks that carrynumber is less than capacity
-        carryNumber3 = capacity;
-      }
+    if (carryNumber3 >= capacity) {                                 //checks that carrynumber is less than capacity
+      carryNumber3 = capacity;
+    }
 
-      if(totalResource1 <= 0){                                      //checks there is resource available
-        carryNumber3 = extraResource1;
-      }
+    if (totalResource1 <= 0) {                                      //checks there is resource available
+      carryNumber3 = extraResource1;
+    }
   }
 
   //medium
-  if(minion3.overlapping(resource2)){                               //checks if minions is at resource
-    carryNumber3 +=1;
+  if (minion3.overlapping(resource2)) {                               //checks if minions is at resource
+    carryNumber3 += 1;
 
-      if(carryNumber3 >= capacity){                                 //checks that carrynumber is less than capacity
-        carryNumber3 = capacity;
-      }
+    if (carryNumber3 >= capacity) {                                 //checks that carrynumber is less than capacity
+      carryNumber3 = capacity;
+    }
 
-      if(totalResource2 <= 0){                                      //checks there is resource available
-        carryNumber3 = extraResource2;
-      }
+    if (totalResource2 <= 0) {                                      //checks there is resource available
+      carryNumber3 = extraResource2;
+    }
   }
 
   //large
-  if(minion3.overlapping(resource3)){                               //checks if minions is at resource
-    carryNumber3 +=1;
+  if (minion3.overlapping(resource3)) {                               //checks if minions is at resource
+    carryNumber3 += 1;
 
-      if(carryNumber3 >= capacity){                                 //checks that carrynumber is less than capacity
-        carryNumber3 = capacity;
-      }
+    if (carryNumber3 >= capacity) {                                 //checks that carrynumber is less than capacity
+      carryNumber3 = capacity;
+    }
 
-      if(totalResource3 <= 0){                                      //checks there is resource available
-        carryNumber3 = extraResource3;
-      }
+    if (totalResource3 <= 0) {                                      //checks there is resource available
+      carryNumber3 = extraResource3;
+    }
   }
 }
 
-function reduce(){
+function reduce() {
   //minion1
   //small
-  if(minion1.overlapping(resource1) && carryNumber1 < capacity){ //if minion1 is overlapping resource
-          totalResource1 -=1; //reduce the resource amount
-          extraResource1 -=1;
-  
-          if(totalResource1 <= 0){ //if resource amount is 0
-              totalResource1 = 0;
-              extraResource1 = carryNumber1;
-              resource1.remove();
-          }
+  if (minion1.overlapping(resource1) && carryNumber1 < capacity) { //if minion1 is overlapping resource
+    totalResource1 -= 1; //reduce the resource amount
+    extraResource1 -= 1;
+
+    if (totalResource1 <= 0) { //if resource amount is 0
+      totalResource1 = 0;
+      extraResource1 = carryNumber1;
+      resource1.remove();
+    }
   }
 
   //medium
-  if(minion1.overlapping(resource2) && carryNumber1 < capacity){ //if minion1 is overlapping resource
-    totalResource2 -=1; //reduce the resource amount
-    extraResource2 -=1;
+  if (minion1.overlapping(resource2) && carryNumber1 < capacity) { //if minion1 is overlapping resource
+    totalResource2 -= 1; //reduce the resource amount
+    extraResource2 -= 1;
 
-    if(totalResource2 <= 0){ //if resource amount is 0
-        totalResource2 = 0;
-        extraResource2 = carryNumber1;
-        resource2.remove();
+    if (totalResource2 <= 0) { //if resource amount is 0
+      totalResource2 = 0;
+      extraResource2 = carryNumber1;
+      resource2.remove();
     }
-}
+  }
 
-//large
-if(minion1.overlapping(resource3) && carryNumber1 < capacity){ //if minion1 is overlapping resource
-  totalResource3 -=1; //reduce the resource amount
-  extraResource3 -=1;
+  //large
+  if (minion1.overlapping(resource3) && carryNumber1 < capacity) { //if minion1 is overlapping resource
+    totalResource3 -= 1; //reduce the resource amount
+    extraResource3 -= 1;
 
-  if(totalResource3 <= 0){ //if resource amount is 0
+    if (totalResource3 <= 0) { //if resource amount is 0
       totalResource3 = 0;
       extraResource3 = carryNumber1;
       resource3.remove();
+    }
   }
-}
 
   //minion2
   //small
-  if(minion2.overlapping(resource1) && carryNumber2 < capacity){ //if minion2 is overlapping resource
-    totalResource1 -=1; //reduce the resource amount
-    extraResource1 -=1;
+  if (minion2.overlapping(resource1) && carryNumber2 < capacity) { //if minion2 is overlapping resource
+    totalResource1 -= 1; //reduce the resource amount
+    extraResource1 -= 1;
 
-    if(totalResource1 <= 0){ //if resource amount is 0
-        totalResource1 = 0;
-        extraResource1 = carryNumber2;
-        resource1.remove();
+    if (totalResource1 <= 0) { //if resource amount is 0
+      totalResource1 = 0;
+      extraResource1 = carryNumber2;
+      resource1.remove();
     }
   }
 
   //medium
-  if(minion2.overlapping(resource2) && carryNumber2 < capacity){ //if minion2 is overlapping resource
-    totalResource2 -=1; //reduce the resource amount
-    extraResource2 -=1;
+  if (minion2.overlapping(resource2) && carryNumber2 < capacity) { //if minion2 is overlapping resource
+    totalResource2 -= 1; //reduce the resource amount
+    extraResource2 -= 1;
 
-    if(totalResource2 <= 0){ //if resource amount is 0
-        totalResource2 = 0;
-        extraResource2 = carryNumber2;
-        resource2.remove();
+    if (totalResource2 <= 0) { //if resource amount is 0
+      totalResource2 = 0;
+      extraResource2 = carryNumber2;
+      resource2.remove();
     }
   }
 
   //large
-  if(minion2.overlapping(resource3) && carryNumber2 < capacity){ //if minion2 is overlapping resource
-    totalResource3 -=1; //reduce the resource amount
-    extraResource3 -=1;
+  if (minion2.overlapping(resource3) && carryNumber2 < capacity) { //if minion2 is overlapping resource
+    totalResource3 -= 1; //reduce the resource amount
+    extraResource3 -= 1;
 
-    if(totalResource3 <= 0){ //if resource amount is 0
-        totalResource3 = 0;
-        extraResource3 = carryNumber2;
-        resource3.remove();
+    if (totalResource3 <= 0) { //if resource amount is 0
+      totalResource3 = 0;
+      extraResource3 = carryNumber2;
+      resource3.remove();
     }
   }
 
   //minion3
   //small
-  if(minion3.overlapping(resource1) && carryNumber3 < capacity){ //if minion3 is overlapping resource
-    totalResource1 -=1; //reduce the resource amount
-    extraResource1 -=1;
+  if (minion3.overlapping(resource1) && carryNumber3 < capacity) { //if minion3 is overlapping resource
+    totalResource1 -= 1; //reduce the resource amount
+    extraResource1 -= 1;
 
-    if(totalResource1 <= 0){ //if resource amount is 0
-        totalResource1 = 0;
-        extraResource1 = carryNumber3;
-        resource1.remove();
+    if (totalResource1 <= 0) { //if resource amount is 0
+      totalResource1 = 0;
+      extraResource1 = carryNumber3;
+      resource1.remove();
     }
   }
 
   //medium
-  if(minion3.overlapping(resource2) && carryNumber3 < capacity){ //if minion3 is overlapping resource
-    totalResource2 -=1; //reduce the resource amount
-    extraResource2 -=1;
+  if (minion3.overlapping(resource2) && carryNumber3 < capacity) { //if minion3 is overlapping resource
+    totalResource2 -= 1; //reduce the resource amount
+    extraResource2 -= 1;
 
-    if(totalResource2 <= 0){ //if resource amount is 0
-        totalResource2 = 0;
-        extraResource2 = carryNumber3;
-        resource2.remove();
+    if (totalResource2 <= 0) { //if resource amount is 0
+      totalResource2 = 0;
+      extraResource2 = carryNumber3;
+      resource2.remove();
     }
   }
 
   //large
-  if(minion3.overlapping(resource3) && carryNumber3 < capacity){ //if minion3 is overlapping resource
-    totalResource3 -=1; //reduce the resource amount
-    extraResource3 -=1;
+  if (minion3.overlapping(resource3) && carryNumber3 < capacity) { //if minion3 is overlapping resource
+    totalResource3 -= 1; //reduce the resource amount
+    extraResource3 -= 1;
 
-    if(totalResource3 <= 0){ //if resource amount is 0
-        totalResource3 = 0;
-        extraResource3 = carryNumber3;
-        resource3.remove();
+    if (totalResource3 <= 0) { //if resource amount is 0
+      totalResource3 = 0;
+      extraResource3 = carryNumber3;
+      resource3.remove();
     }
   }
 }
 
-function dropoff(){
+function dropoff() {
   //minion1
-  if(minion1.overlapping(base)){                                        //checks minion is at base
-    if(carryNumber1 >= 1){
-        storage += 1;                                                   //adds to storage
-        carryNumber1 -=1                                                //removes from carry
+  if (minion1.overlapping(base)) {                                        //checks minion is at base
+    if (carryNumber1 >= 1) {
+      storage += 1;                                                   //adds to storage
+      carryNumber1 -= 1                                                //removes from carry
     }
   }
 
   //minion2
-  if(minion2.overlapping(base)){                                        //checks minion is at base
-    if(carryNumber2 >= 1){
-        storage += 1;                                                   //adds to storage
-        carryNumber2 -=1                                                //removes from carry
+  if (minion2.overlapping(base)) {                                        //checks minion is at base
+    if (carryNumber2 >= 1) {
+      storage += 1;                                                   //adds to storage
+      carryNumber2 -= 1                                                //removes from carry
     }
   }
 
   //minion3
-  if(minion3.overlapping(base)){                                        //checks minion is at base
-    if(carryNumber3 >= 1){
-        storage += 1;                                                   //adds to storage
-        carryNumber3 -=1                                                //removes from carry
+  if (minion3.overlapping(base)) {                                        //checks minion is at base
+    if (carryNumber3 >= 1) {
+      storage += 1;                                                   //adds to storage
+      carryNumber3 -= 1                                                //removes from carry
     }
   }
 }
 
-function write(){
+function write() {
   textAlign(CENTER, CENTER);
   textStyle(NORMAL);
   text("STORAGE", 100, 480);
-  text(""+storage, 100, 500);
+  text("" + storage, 100, 500);
 
   text("CARRY", 200, 480);
-  text(""+(carryNumber1 + carryNumber2 + carryNumber3), 200, 500);
+  text("" + (carryNumber1 + carryNumber2 + carryNumber3), 200, 500);
 }
 
 //===SCREEN CODE===
@@ -899,7 +899,7 @@ function drawGame() {
 
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
-  
+
 }
 
 function drawCredits() {

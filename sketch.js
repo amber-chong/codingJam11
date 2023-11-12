@@ -80,14 +80,14 @@ let storage = 0;                                                    //the base s
 //resource small
 let resource1;
 let rx1 = 400;                                                      //resource1's values
-let ry1 = 300;
+let ry1 = 400;
 let rr1 = 20;
 let totalResource1 = 100;                                           //resource1's total resource
 let extraResource1 = 100;                                           //if the remaining resource is not = to capacity
 
 //resource medium
 let resource2;
-let rx2 = 870;
+let rx2 = 640;
 let ry2 = 130;
 let rr2 = 40;
 let totalResource2 = 200;
@@ -95,8 +95,8 @@ let extraResource2 = 200;
 
 //resource large
 let resource3;
-let rx3 = 170;
-let ry3 = 100;
+let rx3 = 700;
+let ry3 = 450;
 let rr3 = 60;
 let totalResource3 = 300;
 let extraResource3 = 300;
@@ -122,6 +122,7 @@ let playScaled;
 let creditScaled;
 let creditImg;
 let backImg;
+let caveBg
 
 function preload() {
   GoldCoin1 = loadImage('Assets/Images/GoldCoin/goldCoin1.png');    //Preloads Images 
@@ -144,6 +145,8 @@ function preload() {
   bgImg = loadImage('Assets/Images/background.png')
   creditImg = loadImage('Assets/Images/creditLogo.png')
   backImg = loadImage('Assets/Images/back.png')
+  loadingImg = loadImage('Assets/Images/loading.png')
+  caveBg = loadImage('Assets/Images/cave.png')
 
   moleImg = loadImage('Assets/Images/mole.png')
 }
@@ -172,13 +175,13 @@ function setup() {
   base.collider = 'kinematic'
 
   //minions
-  minion1 = createSprite(baseX + 100, 550, radius);             //Creates minion
+  minion1 = createSprite(baseX + 100, 300, radius);             //Creates minion
   minion1.collider = 'kinematic'
   minion1.w = hitboxSize
   minion1.h = hitboxSize
   minion1.image = moleImg
 
-  minion2 = createSprite(baseX - 100, 550, radius);             //Creates minion
+  minion2 = createSprite(baseX - 100, 300, radius);             //Creates minion
   minion2.collider = 'kinematic'
   minion2.w = hitboxSize
   minion2.h = hitboxSize
@@ -210,11 +213,11 @@ function setup() {
   resource3.visible = false;
 
   //buttons
-  startButton = createImg('Assets/Images/play_scaled.png');
+  startButton = createImg('Assets/Images/play.png');
   startButton.position(300, 350)
   startButton.mouseClicked(drawGame);
 
-  creditButton = createImg('Assets/Images/credits_scaled.png');
+  creditButton = createImg('Assets/Images/credits_new.png');
   creditButton.position(550, 350)
   creditButton.mouseClicked(drawCredits)
 
@@ -224,7 +227,7 @@ function setup() {
 }
 
 function draw() {
-  background('black');
+  background(caveBg)
   //camera.x = base.x;
   //camera.y = base.y;
 
@@ -234,29 +237,6 @@ function draw() {
   minion2.h = hitboxSize        //Allows for magnet powerup
   minion3.w = hitboxSize        //Allows for magnet powerup
   minion3.h = hitboxSize        //Allows for magnet powerup
-
-  canvasBoundary();
-  resourceStatusBar();                                    //Runs Custom Function
-  resourceCollectionMechanics();                          //Runs Custom Function
-  buyUpgrades();                                          //Runs Custom Function
-  buyStation();
-
-  minionPress1();                                         //Runs Custom Function
-  createLine1();                                          //Runs Custom Function
-  minionMovement1();                                      //Runs Custom Function
-
-  minionPress2();                                         //Runs Custom Function
-  createLine2();                                          //Runs Custom Function
-  minionMovement2();                                      //Runs Custom Function
-
-  minionPress3();                                         //Runs Custom Function
-  createLine3();                                          //Runs Custom Function
-  minionMovement3();                                      //Runs Custom Function
-
-  collect();                                              //collects resources
-  dropoff();                                              //adds to storage
-  reduce();                                               //reduce total resource avaliablie
-  //write();      //shows stats for storage, carried and resource no.
 
   /*
         if (currentScreen == LOADING) {
@@ -281,7 +261,30 @@ function draw() {
       drawMenuScreen();
       break;
     case GAME:
+
       drawGame();
+      canvasBoundary();
+      resourceCollectionMechanics();                          //Runs Custom Function
+      resourceStatusBar();                                    //Runs Custom Function
+      buyUpgrades();                                          //Runs Custom Function
+      buyStation();
+
+      minionPress1();                                         //Runs Custom Function
+      createLine1();                                          //Runs Custom Function
+      minionMovement1();                                      //Runs Custom Function
+    
+      minionPress2();                                         //Runs Custom Function
+      createLine2();                                          //Runs Custom Function
+      minionMovement2();                                      //Runs Custom Function
+    
+      minionPress3();                                         //Runs Custom Function
+      createLine3();                                          //Runs Custom Function
+      minionMovement3();                                      //Runs Custom Function
+    
+      collect();                                              //collects resources
+      dropoff();                                              //adds to storage
+      reduce();                                               //reduce total resource avaliablie
+      //write();      //shows stats for storage, carried and resource no.
       break;
     case CREDITS:
       drawCredits();
@@ -307,9 +310,7 @@ function drawHealthBar(x, y) {
 
 function healthDecrease() {
   // calculates decrease amount
-  let decreaseAmount = deltaTime * frameRate() * decreaseRate;
-
-  // decreases
+  let decreaseAmount = deltaTime * decreaseRate;
   health = max(0, health - decreaseAmount);
 }
 
@@ -328,7 +329,7 @@ function resourceStatusBar() {                          //Draws The Status Bar i
   stroke('white');                                       //Outline|Border of box
   noFill();                                              //Outline|Border of box
   rectMode(CORNER);
-  rect(10, 10, 200, 40, 5);                             //Outline|Border of box
+  rect(60, 60, 180, 40, 5);                             //Outline|Border of box
 
   if (timer == 0) {
     GoldCoinIndex++;                                    //Increments index
@@ -339,16 +340,16 @@ function resourceStatusBar() {                          //Draws The Status Bar i
   }
 
   imageMode(CORNER)
-  image(GoldCoinArray[GoldCoinIndex], 80, 15);          //Draws the coin stored at a specific index of the array
-  image(wormImg, 15, 15);                               //Draws Worm in status bar
+  image(GoldCoinArray[GoldCoinIndex], 145, 63);          //Draws the coin stored at a specific index of the array
+  image(wormImg, 75, 63);                               //Draws Worm in status bar
 
   textAlign(LEFT, CENTER);                              //Displays GoldCount Value in Status Bar
   textSize(18);                                         //Displays GoldCount Value in Status Bar 
   noStroke();                                           //Displays GoldCount Value in Status Bar
   fill('gold');                                         //Displays GoldCount Value in Status Bar
-  text(goldCount, 110, 33);                             //Displays GoldCount Value in Status Bar
+  text(goldCount, 180, 80);                             //Displays GoldCount Value in Status Bar
   fill('#d36d5d');                                       //Displays WormCount
-  text(wormCount, 45, 33);                               //Displays WormCount
+  text(wormCount, 110, 80);                               //Displays WormCount
 }
 
 function resourceCollectionMechanics() {
@@ -380,13 +381,12 @@ function resourceCollectionMechanics() {
   }
 }
 
-
 function goldGeneration() {
   let goldOre = new Sprite()                                      //Creates Gold Ore Sprite
   goldOre.img = goldOreImg
   goldOre.scale = 0.1
-  goldOre.x = random(base.x - width / 2, base.x + width / 2)
-  goldOre.y = random(base.y - height / 2, base.y + height / 2)
+  goldOre.x = random(base.x - 475, base.x + 465)
+  goldOre.y = random(base.y - 275, base.y + 275)
   goldOre.w = 40
   goldOre.h = 20
   return goldOre
@@ -396,15 +396,15 @@ function wormGeneration() {
   let worm = new Sprite()                                         //Creates Worm Sprite
   worm.img = wormImg
   worm.scale = 2
-  worm.x = random(base.x - width / 2, base.x + width / 2)
-  worm.y = random(base.y - height / 2, base.y + height / 2)
+  worm.x = random(base.x - 475, base.x + 465)
+  worm.y = random(base.y - 275, base.y + 275)
   worm.w = 45
   worm.h = 15
   return worm
 }
 
 function buyUpgrades() {
-  if ((mouseX >= width - 15 && mouseX <= width && mouseY >= height / 2 - 40 && mouseY <= height / 2 + 40) && mouse.presses()) {    //Checks if Mouse is over buy station tab
+  if ((mouseX >= width - 50 && mouseX <= width && mouseY >= height / 2 - 50 && mouseY <= height / 2 + 50) && mouse.presses()) {    //Checks if Mouse is over buy station tab
     buyStationOpen = true;                                                                                                         // sets value to true
   }
 
@@ -412,8 +412,8 @@ function buyUpgrades() {
     rectMode(CENTER);
     stroke('white');
     fill(211, 211, 211, 80);
-    rect(width, height / 2, 30, 80, 5);
-  } else {                                                                      // Buy station i sopen if value is true
+    rect(width, height / 2, 100, 100, 5);
+  } else {                                                                  // Buy station i sopen if value is true
     rectMode(CENTER);
     textAlign(CENTER, CENTER);
     stroke('white');
@@ -453,8 +453,8 @@ function buyUpgrades() {
     }
 
     //Buystation Box 2
-    imageMode(CENTER);
-    image(magnetImg, width - 75 - (75 / 2), 230, 40, 40);
+    imageMode(CORNER);
+    image(magnetImg, width - 95 - (75 / 2), 210, 40, 40);
     fill('white');
     textSize(10);
     text('MAGNET', width - 75 - (75 / 2), 255)
@@ -916,6 +916,10 @@ function drawLoadingScreen() {
   startButton.hide();
   creditButton.hide();
   backButton.hide();
+
+  image(bgImg, 0, 0)
+  image(loadingImg, 302, 262)
+  loadingImg.resize(396, 56)
 }
 
 function drawGame() {
@@ -924,6 +928,7 @@ function drawGame() {
   startButton.hide();
   creditButton.hide();
   backButton.show();
+  backButton.position(450, 520)
 
   base.visible = true;
   minion1.visible = true;
@@ -932,13 +937,12 @@ function drawGame() {
   resource1.visible = true;
   resource2.visible = true;
   resource3.visible = true;
-
   goldSpawnTimer--;                                       //Decrements Timer
   wormSpawnTimer--;                                       //Decrements Timer
   noStroke()
   fill('#0b170e')
   textSize(14)
-  text('© Group 11', 450, 575)
+  text('© Group 11', 450, 585)
 }
 
 function drawCredits() {
@@ -970,7 +974,9 @@ function drawCredits() {
   textSize(18)
   text('GoldCoin - morgan3d, OpenGameArt.Org', 330, 280)
   text('Worm - Russpuppy, OpenGameArt.Org', 345, 310)
-  text('Sprites/Text - Amber', 420, 340)
+  text('Summer Backgrounds - Free Game Assets, itch.io', 300, 340)
+  text('Cave background - ABDALLAHMISHAL, itch.io  ', 300, 370)
+  text('Mole sprites/Text - Amber', 400, 400)
   fill('#0b170e')
   textSize(14)
   text('© Group 11', 450, 575)

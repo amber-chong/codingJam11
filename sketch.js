@@ -107,7 +107,7 @@ let MAIN_MENU = 1;
 let GAME = 2;
 let CREDITS = 3;
 
-let currentScreen = LOADING;
+let currentScreen = CREDITS;
 
 //health bar
 let health = 100;
@@ -147,8 +147,12 @@ function preload() {
   backImg = loadImage('Assets/Images/back.png')
   loadingImg = loadImage('Assets/Images/loading.png')
   caveBg = loadImage('Assets/Images/cave.png')
-
   moleImg = loadImage('Assets/Images/mole.png')
+
+  soundFormats('mp3', 'ogg')
+  hoverButton = loadSound('Assets/Sounds/buttonHover.ogg');
+  selectButton = loadSound('Assets/Sounds/buttonSelect.ogg');
+  caveNoise = loadSound('Assets/Sounds/dungeon.ogg')
 }
 
 function setup() {
@@ -224,6 +228,10 @@ function setup() {
   backButton = createImg('Assets/Images/back.png')
   backButton.position(450, 120)
   backButton.mouseClicked(gameReset)
+/*
+  startButton.mouseOver(hoverButton)
+  creditButton.mouseOver(hoverButton)
+  backButton.mouseOver(hoverButton)*/
 }
 
 function draw() {
@@ -290,10 +298,10 @@ function draw() {
       drawCredits();
       break;
   }
-
+/*
   if (frameCount == 60) {
     currentScreen = MAIN_MENU;
-  }
+  }*/
 }
 
 function drawHealthBar(x, y) {
@@ -943,6 +951,7 @@ function drawGame() {
   fill('#0b170e')
   textSize(14)
   text('© Group 11', 450, 585)
+  //caveNoise.play()
 }
 
 function drawCredits() {
@@ -977,6 +986,12 @@ function drawCredits() {
   text('Summer Backgrounds - Free Game Assets, itch.io', 300, 340)
   text('Cave background - ABDALLAHMISHAL, itch.io  ', 300, 370)
   text('Mole sprites/Text - Amber', 400, 400)
+  /*
+  textSize(25)
+  text('Sounds', 450, 450)
+  textSize(18)
+  text('Beats Warrior: Nian - Liujiajun, OpenGameArt.Org', 285, 480)
+  text('Loopable Dungeon Ambience - JaggedStone, OpenGameArt.Org', 230, 510)*/
   fill('#0b170e')
   textSize(14)
   text('© Group 11', 450, 575)
@@ -991,4 +1006,8 @@ function gameReset() {
   else if (currentScreen == GAME) {
     currentScreen = MAIN_MENU;
   }
+}
+
+function buttonHover() {
+  hoverButton.play();
 }

@@ -107,7 +107,7 @@ let MAIN_MENU = 1;
 let GAME = 2;
 let CREDITS = 3;
 
-let currentScreen = CREDITS;
+let currentScreen = LOADING;
 
 //health bar
 let health = 100;
@@ -298,10 +298,10 @@ function draw() {
       drawCredits();
       break;
   }
-/*
+
   if (frameCount == 60) {
     currentScreen = MAIN_MENU;
-  }*/
+  }
 }
 
 function drawHealthBar(x, y) {
@@ -960,6 +960,7 @@ function drawCredits() {
   startButton.hide();
   creditButton.hide();
   backButton.show();
+  backButton.position(450, 110)
   base.visible = false;
   minion1.visible = false;
   minion2.visible = false;
